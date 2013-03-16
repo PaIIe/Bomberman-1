@@ -1,0 +1,28 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package bomberman;
+
+import org.newdawn.slick.AppGameContainer;
+import org.newdawn.slick.SlickException;
+
+/**
+ *
+ * @author Michal
+ */
+public class Main {
+     
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) throws SlickException {
+        AppGameContainer app;
+        app = new AppGameContainer(new Game());
+        app.setDisplayMode(640, 480, false);
+        app.setVSync(true);
+        app.start();
+        
+    }
+    
+}

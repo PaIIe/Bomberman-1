@@ -13,15 +13,16 @@ import org.newdawn.slick.SlickException;
  *
  * @author Michal
  */
-public class Blob extends Enemies {
+public class Broom extends Enemies {
     private int oldX;
     private int oldY;
     private int randomSteps;
     private int randomDirection;
+    private final static int SPEED = 2;
 
-    public Blob() throws SlickException {
-        leftAnimation = new Animation(Anim.getAnimation("resources/actors/blob_w", 1), 250);
-        rightAnimation = new Animation(Anim.getAnimation("resources/actors/blob_e", 1), 250);
+    public Broom() throws SlickException {
+        leftAnimation = new Animation(Anim.getAnimation("resources/actors/broom", 1), 250);
+        rightAnimation = new Animation(Anim.getAnimation("resources/actors/broom", 1), 250);
         super.animation = this.leftAnimation;
         this.animation.start();
         direction = Direction.WEST;
@@ -43,21 +44,21 @@ public class Blob extends Enemies {
         switch (randomDirection) {
             case 0:
                 direction = Direction.NORTH;
-                this.y--;
+                this.y-=SPEED;
                 break;
             case 90:
                 direction = Direction.EAST;
                 this.animation = rightAnimation;
-                this.x++;
+                this.x+=SPEED;
                 break;
             case 180:
                 direction = Direction.SOUTH;
-                this.y++;
+                this.y+=SPEED;
                 break;
             case 270:
                 direction = Direction.WEST;
                 this.animation = leftAnimation;
-                this.x--;
+                this.x-=SPEED;
                 break;
         }
         randomSteps--;

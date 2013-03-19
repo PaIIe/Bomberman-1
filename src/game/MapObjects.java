@@ -5,7 +5,7 @@
 package game;
 
 import game.actor.Bombs;
-import game.actor.Enemy;
+import game.actor.Blob;
 import game.actor.Flame;
 import game.actor.Player;
 import game.item.Items;
@@ -83,7 +83,7 @@ public abstract class MapObjects implements Objects {
         return objekt.intersects(predmet);
         }
      */   
-        if(actor instanceof Items || actor instanceof Enemy){
+        if(actor instanceof Items || actor instanceof Blob){
         Rectangle2D predmet = new Rectangle2D.Float(actor.getX()+6, actor.getY()+6, 18, 18);
         Rectangle2D objekt = new Rectangle2D.Float(this.getX()+4, this.getY()+4, this.animation.getWidth()-8, this.animation.getHeight()-8);
         return objekt.intersects(predmet);

@@ -148,7 +148,7 @@ public class Player extends Actors {
         for (int x = 0; x < level.getListOfObjects().toArray().length; x++) {
             MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
             if (this.intersects(o)) {
-                if (o instanceof Enemy) {
+                if (o instanceof Blob) {
                     this.isAlive = false;
                 }
                 if (o instanceof Flame) {

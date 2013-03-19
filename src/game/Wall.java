@@ -5,7 +5,6 @@
 package game;
 
 import org.newdawn.slick.Animation;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 
 /**
@@ -15,7 +14,7 @@ import org.newdawn.slick.SlickException;
 public class Wall extends Walls {
  
     public Wall() throws SlickException{
-        animation = new Animation(Anim.getAnimation("resources/wall", 1),200);
+        animation = new Animation(Anim.getAnimation("resources/map/wall", 1),200);
     }
     
 }

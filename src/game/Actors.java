@@ -23,7 +23,7 @@ public abstract class Actors extends MapObjects {
     
     public boolean intersectWithWall() {
         for(Walls w: level.getMap().getWalls()){
-            if(this.intersects(w)){
+            if(w.intersects(this)){
                 return true;
             }
             

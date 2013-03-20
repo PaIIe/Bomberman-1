@@ -7,8 +7,11 @@ package game.actor;
 import game.Actors;
 import game.Anim;
 import game.Level;
+import game.MapObjects;
 import game.Wall;
 import game.Walls;
+import game.item.Items;
+import java.awt.geom.Rectangle2D;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 
@@ -30,15 +33,15 @@ public class Bombs extends Actors {
         explodeTime = 300;
         exploded = false;
         intersectWithPlayer = true;
-        
+
     }
 
     @Override
     public void act() {
-        if(!level.getPlayer().intersects(this)){
+        if (!level.getPlayer().intersects(this)) {
             this.intersectWithPlayer = false;
         }
-        
+
         if (!exploded) {
             if (explodeTime == 0) {
                 animation = explodingBomb;
@@ -81,7 +84,7 @@ public class Bombs extends Actors {
                         flame.setPosition(oldX + 32 + 32 * r, oldY);
                         level.addToLevel(flame);
                     } else {
-                        checkWall(this.getX()+32, this.getY());
+                        checkWall(this.getX() + 32, this.getY());
                         this.x -= (16 + 32 * r);
                         break;
                     }
@@ -111,7 +114,7 @@ public class Bombs extends Actors {
                         flame.setPosition(oldX, oldY + 32 + 32 * r);
                         level.addToLevel(flame);
                     } else {
-                        checkWall(this.getX(), this.getY()+32);
+                        checkWall(this.getX(), this.getY() + 32);
                         this.y -= (16 + 32 * r);
                         break;
                     }
@@ -141,15 +144,32 @@ public class Bombs extends Actors {
             Walls o = (Walls) level.getMap().getWalls().toArray()[i];
             if (((o.getX() / 32) == (x / 32)) && ((o.getY() / 32) == (y / 32)) && (o instanceof Wall)) {
                 level.getMap().getWalls().remove(o);
+                checkItem(o.getX(),o.getY());
                 try {
                     WallInFire wall = new WallInFire();
                     wall.setPosition(o.getX(), o.getY());
                     level.addToLevel(wall);
                 } catch (SlickException ex) {
-                    
+                    System.out.println("SlickException - WallInFire creating fail");
                 }
             }
-        } 
+        }
+    }
+
+    public void checkItem(int x, int y) {
+        for (int i = 0; i < level.getListOfObjects().toArray().length; i++) {
+            MapObjects o = (MapObjects) level.getListOfObjects().toArray()[i];
+            if (o instanceof Items && o.getX() == x && o.getY() == y) {
+                ((Items) o).setVisible(true);
+            }
+        }
+    }
+
+    @Override
+    public boolean intersects(MapObjects actor) {
+        Rectangle2D predmet = new Rectangle2D.Float(actor.getX() + 6, actor.getY() + 6, 18, 18);
+        Rectangle2D objekt = new Rectangle2D.Float(this.getX() + 2, this.getY() + 2, this.animation.getWidth() - 4, this.animation.getHeight() - 4);
+        return objekt.intersects(predmet);
     }
 
     /**

@@ -11,7 +11,6 @@ import game.MapObjects;
 import game.item.BombsUp;
 import game.item.RangeUp;
 import game.item.SpeedUp;
-import java.util.logging.Logger;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -40,6 +39,7 @@ public class Player extends Actors {
     private int puttingTime = 0;
     private Level level = Level.getLevel();
     private Input input = new Input(480);
+    private boolean pause = false;
 
     public Player() throws SlickException {
         leftAnimation = new Animation(Anim.getAnimation("resources/player/Bomberman_w", 3), 250);
@@ -92,7 +92,7 @@ public class Player extends Actors {
             if (bombsCount > 0) {
                 bombsCount--;
                 puttingBomb = true;
-                puttingTime = 50;
+                puttingTime = 30;
                 switch (direction) {
                     case NORTH:
                         animation = puttingUp;
@@ -147,11 +147,8 @@ public class Player extends Actors {
 
         for (int x = 0; x < level.getListOfObjects().toArray().length; x++) {
             MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
-            if (this.intersects(o)) {
-                if (o instanceof Blob) {
-                    this.isAlive = false;
-                }
-                if (o instanceof Flame) {
+            if (o.intersects(this)) {
+                if (o instanceof Enemies || o instanceof Flame) {
                     this.isAlive = false;
                 }
                 if (o instanceof Bombs) {
@@ -189,5 +186,19 @@ public class Player extends Actors {
 
     public void setBomb() {
         bombsCount++;
+    }
+
+    /**
+     * @return the pause
+     */
+    public boolean isPause() {
+        return pause;
+    }
+
+    /**
+     * @param pause the pause to set
+     */
+    public void setPause(boolean pause) {
+        this.pause = pause;
     }
 }

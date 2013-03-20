@@ -76,25 +76,7 @@ public abstract class MapObjects implements Objects {
         this.y = y;
     }
     
-    public boolean intersects(MapObjects actor) {
-   /*     if(this instanceof Player){
-        Rectangle2D predmet = new Rectangle2D.Float(actor.getX()+4, actor.getY()+4, 24, 24);
-        Rectangle2D objekt = new Rectangle2D.Float(this.getX(), this.getY(), this.animation.getWidth(), this.animation.getHeight());
-        return objekt.intersects(predmet);
-        }
-     */   
-        if(actor instanceof Items || actor instanceof Blob){
-        Rectangle2D predmet = new Rectangle2D.Float(actor.getX()+6, actor.getY()+6, 18, 18);
-        Rectangle2D objekt = new Rectangle2D.Float(this.getX()+4, this.getY()+4, this.animation.getWidth()-8, this.animation.getHeight()-8);
-        return objekt.intersects(predmet);
-        }               
-        
-        if(actor instanceof Walls){
-        Rectangle2D predmet = new Rectangle2D.Float(actor.getX(), actor.getY(), 32, 32);    
-        Rectangle2D objekt = new Rectangle2D.Float(this.getX()+4, this.getY()+4, this.animation.getWidth()-8, this.animation.getHeight()-8);
-        return objekt.intersects(predmet);       
-        }
-       
+    public boolean intersects(MapObjects actor) {      
         Rectangle2D predmet = new Rectangle2D.Float(actor.getX(), actor.getY(), actor.getAnimation().getWidth(), actor.getAnimation().getHeight());
         Rectangle2D objekt = new Rectangle2D.Float(this.getX(), this.getY(), this.animation.getWidth(), this.animation.getHeight());
         return objekt.intersects(predmet);

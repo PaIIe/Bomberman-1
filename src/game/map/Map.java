@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game;
+package game.map;
 
+import game.Level;
 import game.actor.Blob;
 import game.actor.Broom;
 import game.actor.Cron;
@@ -24,9 +25,7 @@ public class Map {
 
     private TiledMap mapa;
     private Level level = Level.getLevel();
-    //   private Walls[][] arrayOfWalls;
     private List<Walls> Walls;
-    // private private List<MapObjects> objects = Level.getListOfObjects();
 
     public Map(Level level) {
         this.level = level;
@@ -35,11 +34,7 @@ public class Map {
     public void loadMap(String level) {
         try {
             mapa = new TiledMap("resources/map/" + level + ".tmx");
-            //  arrayOfWalls = new Walls[(mapa.getWidth())][];
             Walls = new ArrayList<Walls>();
-//            for(int x=0; x < mapa.getWidth(); x++){
-            //      arrayOfWalls[x] = new Walls[mapa.getHeight()];
-            //      }
             processMap();
         } catch (SlickException ex) {
             System.out.println("Chyba pri nacitani mapy");;
@@ -86,7 +81,11 @@ public class Map {
                     range.setPosition(mapa.getObjectX(0, i), mapa.getObjectY(0, i));
                     level.addToLevel(range);
                     break;
-
+                case "portal":
+                    Portal portal = new Portal();
+                    portal.setPosition(mapa.getObjectX(0, i), mapa.getObjectY(0, i));
+                    level.addToLevel(portal);
+                    break;
             }
         }
         // detect all walls in map     
@@ -98,14 +97,12 @@ public class Map {
             switch (mapa.getObjectType(1, i)) {
                 case "wall":
                     Wall stena = new Wall();
-                    //       arrayOfWalls[wallX][wallY] = stena;
                     Walls.add(stena);
                     stena.setPosition(wallX, wallY);
                     break;
 
                 case "block":
                     Block blok = new Block();
-                    //        arrayOfWalls[wallX][wallY] = blok;
                     Walls.add(blok);
                     blok.setPosition(wallX, wallY);
                     break;

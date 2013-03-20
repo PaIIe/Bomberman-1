@@ -2,7 +2,11 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game;
+package game.actor;
+
+import game.Level;
+import game.MapObjects;
+import game.map.Walls;
 
 /**
  *

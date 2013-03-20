@@ -4,7 +4,6 @@
  */
 package game.actor;
 
-import game.Actors;
 import game.Anim;
 import game.Level;
 import game.MapObjects;

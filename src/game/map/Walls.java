@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game;
+package game.map;
 
+import game.MapObjects;
 import java.awt.geom.Rectangle2D;
 
 /**

@@ -4,9 +4,9 @@
  */
 package game.actor;
 
-import game.Actors;
 import game.Level;
 import game.MapObjects;
+import game.Statistics;
 import game.item.Items;
 import java.awt.geom.Rectangle2D;
 import org.newdawn.slick.Animation;
@@ -20,6 +20,7 @@ public abstract class Enemies extends Actors{
     protected Animation rightAnimation;
     protected Direction direction;
     protected Level level = Level.getLevel();
+    private Statistics stat = Statistics.getStatistics();
    
     @Override
     public void act() {
@@ -31,6 +32,7 @@ public abstract class Enemies extends Actors{
             if (o.intersects(this)) {
                 if (o instanceof Flame) {
                     level.getListOfObjects().remove(this);
+                    stat.incEnemiesKilled();
                 }
                 if((o instanceof Bombs) || (o instanceof Items)){
                     changeDirection();

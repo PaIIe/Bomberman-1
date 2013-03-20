@@ -4,13 +4,14 @@
  */
 package game.actor;
 
-import game.Actors;
 import game.Anim;
 import game.Level;
 import game.MapObjects;
+import game.Statistics;
 import game.item.BombsUp;
 import game.item.RangeUp;
 import game.item.SpeedUp;
+import game.map.Portal;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -38,6 +39,7 @@ public class Player extends Actors {
     private boolean puttingBomb = false;
     private int puttingTime = 0;
     private Level level = Level.getLevel();
+    private Statistics stat = Statistics.getStatistics();
     private Input input = new Input(480);
     private boolean pause = false;
 
@@ -148,6 +150,9 @@ public class Player extends Actors {
         for (int x = 0; x < level.getListOfObjects().toArray().length; x++) {
             MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
             if (o.intersects(this)) {
+                if (o instanceof Portal){
+                    this.setPause(true);
+                }
                 if (o instanceof Enemies || o instanceof Flame) {
                     this.isAlive = false;
                 }
@@ -159,15 +164,18 @@ public class Player extends Actors {
                 if (o instanceof BombsUp) {
                     level.getListOfObjects().remove(o);
                     bombsCount++;
+                    stat.incItemsUsed();
                 }
                 if (o instanceof RangeUp) {
                     level.getListOfObjects().remove(o);
                     range++;
+                    stat.incItemsUsed();
                 }
                 if (o instanceof SpeedUp) {
                     level.getListOfObjects().remove(o);
                     speed++;
-                    speedTime = 500;
+                    speedTime = 1000;
+                    stat.incItemsUsed();
                 }
             }
         }

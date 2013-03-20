@@ -4,6 +4,9 @@
  */
 package game;
 
+import game.map.Map;
+import game.map.Walls;
+import game.map.Wall;
 import game.actor.Player;
 import java.util.ArrayList;
 import java.util.List;

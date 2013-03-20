@@ -4,9 +4,10 @@
  */
 package bomberman;
 
-import game.Actors;
+import game.actor.Actors;
 import game.Level;
 import game.MapObjects;
+import game.Statistics;
 import game.actor.Player;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;
@@ -23,14 +24,16 @@ import org.newdawn.slick.gui.TextField;
 public class Game extends BasicGame {
 
     private Player hrac;
-    public TextField text;
+    private TextField text;
     private Level level;
     private long playingTime;
     private long startTime;
+    private Statistics stat;
 
     public Game() {
         super("Bomberman");
-        startTime = System.currentTimeMillis();
+        stat = Statistics.getStatistics();
+      //  startTime = System.currentTimeMillis();
     }
 
     @Override
@@ -80,9 +83,11 @@ public class Game extends BasicGame {
         level.showWalls();
         //     text.render(gc, grphcs);
         if (level.getPlayer().isPause()) {
-            int minutes = (int) playingTime / 60;
-            int seconds = (int) playingTime % 60;
+            int minutes = stat.getPlayingTime() / 60;
+            int seconds = stat.getPlayingTime() % 60;
             grphcs.drawString("Actual playing time: " + minutes + " min " + seconds + " secs", 180, 8);
+       //     grphcs.drawString("Enemies killed: " + stat.getEnemiesKilled(), 180, 30);
+       //    grphcs.drawString("Walls Destroyed: " + stat.getWallsDestroyed(), 180, 50);
         }
     }
 }

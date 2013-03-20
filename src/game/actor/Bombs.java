@@ -4,13 +4,13 @@
  */
 package game.actor;
 
-import game.Actors;
 import game.Anim;
 import game.Level;
 import game.MapObjects;
-import game.Wall;
-import game.Walls;
+import game.Statistics;
 import game.item.Items;
+import game.map.Wall;
+import game.map.Walls;
 import java.awt.geom.Rectangle2D;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
@@ -22,9 +22,10 @@ import org.newdawn.slick.SlickException;
 public class Bombs extends Actors {
 
     private int explodeTime;
-    Animation explodingBomb;
+    private Animation explodingBomb;
     private boolean exploded;
-    Level level = Level.getLevel();
+    private Level level = Level.getLevel();
+    private Statistics stat = Statistics.getStatistics();
     private boolean intersectWithPlayer;
 
     public Bombs() throws SlickException {
@@ -144,6 +145,7 @@ public class Bombs extends Actors {
             Walls o = (Walls) level.getMap().getWalls().toArray()[i];
             if (((o.getX() / 32) == (x / 32)) && ((o.getY() / 32) == (y / 32)) && (o instanceof Wall)) {
                 level.getMap().getWalls().remove(o);
+                stat.incWallsDestroyed();
                 checkItem(o.getX(),o.getY());
                 try {
                     WallInFire wall = new WallInFire();

@@ -48,8 +48,7 @@ public class Cron extends Enemies implements Mover {
         oldY = this.getY();
         if (path != null) {
             stepSize--;
-        }
-        else {
+        } else {
             stepSize = 32;
         }
         if (stepSize == 0) {
@@ -83,7 +82,41 @@ public class Cron extends Enemies implements Mover {
         if (randomSteps == 0) {
             Random r = new Random();
             generatedDirection = r.nextInt(4) * 90;
-            randomSteps = r.nextInt(50) + 10;
+            int cronX = this.getX() / 32;
+            int cronY = this.getY() / 32;
+            switch (generatedDirection) {
+                case 0:
+                    if (level.getMap().getWallMap()[cronX][cronY - 1] == 1) {
+                        move();
+                    } else {
+                        this.y--;
+                    }
+                    break;
+                case 90:
+                    if (level.getMap().getWallMap()[cronX + 1][cronY] == 1) {
+                        move();
+                    } else {
+                        this.animation = rightAnimation;
+                        this.x++;
+                    }
+                    break;
+                case 180:
+                    if (level.getMap().getWallMap()[cronX][cronY + 1] == 1) {
+                        move();
+                    } else {
+                        this.y++;
+                    }
+                    break;
+                case 270:
+                    if (level.getMap().getWallMap()[cronX-1][cronY] == 1) {
+                        move();
+                    } else {
+                    this.animation = leftAnimation;
+                    this.x--;
+                    }
+                    break;
+            }
+            randomSteps = 32;
         }
     }
 
@@ -94,7 +127,7 @@ public class Cron extends Enemies implements Mover {
         if (path == null) {
             move();
         } else {
-            randomSteps = path.getLength() * 32;
+            randomSteps = stepSize;
             if (path.getStep(1).getX() > this.getX() / 32) {
                 generatedDirection = 90;
             }
@@ -110,29 +143,6 @@ public class Cron extends Enemies implements Mover {
         }
     }
 
-
-    /*    int z;
-     Player hrac = (Player) level.getPlayer();
-     Random r = new Random();
-     z = r.nextInt(2);
-     switch (z) {
-     case 0:
-     if (hrac.getX() < this.getX()) {
-     this.generatedDirection = 270;
-     } else {
-     this.generatedDirection = 90;
-     }
-     randomSteps = 45;
-     break;
-     case 1:
-     if (hrac.getY() < this.getY()) {
-     this.generatedDirection = 0;
-     } else {
-     this.generatedDirection = 180;
-     }
-     randomSteps = 45;
-     break;
-     } */
     @Override
     public void changeDirection() {
         this.setPosition(oldX, oldY);

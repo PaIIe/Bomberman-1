@@ -43,6 +43,7 @@
   <object name="player" type="player" x="32" y="32" width="32" height="32">
    <polygon points="0,0 32,0 32,32 0,32 0,0"/>
   </object>
+  <object type="cron" x="96" y="224" width="32" height="32"/>
  </objectgroup>
  <objectgroup name="Walls" width="20" height="15">
   <object type="wall" x="32" y="64" width="32" height="32"/>
@@ -51,7 +52,6 @@
   <object type="wall" x="32" y="128" width="32" height="32"/>
   <object type="wall" x="32" y="160" width="32" height="32"/>
   <object type="wall" x="64" y="160" width="32" height="32"/>
-  <object type="wall" x="96" y="160" width="32" height="32"/>
   <object type="wall" x="128" y="160" width="32" height="32"/>
   <object type="wall" x="160" y="160" width="32" height="32"/>
   <object type="wall" x="160" y="128" width="32" height="32"/>

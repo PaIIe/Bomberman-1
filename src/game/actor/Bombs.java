@@ -57,6 +57,7 @@ public class Bombs extends Actors {
             }
         } else {
             if (explodeTime == 0) {
+                level.getMap().getWallMap()[this.getX()/32][this.getY()/32]=0;
                 level.getListOfObjects().remove(this);
                 level.getPlayer().setBomb();
             } else {

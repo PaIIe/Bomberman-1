@@ -71,6 +71,7 @@ public class Player extends Actors {
                     bomba = new Bombs();
                     level.addToLevel(bomba);
                     bomba.setPosition((this.getX() + 15) / 32 * 32, (this.getY() + 15) / 32 * 32);
+                    level.getMap().getWallMap()[bomba.getX()/32][bomba.getY()/32]=1;
                 } catch (SlickException ex) {
                 }
                 puttingBomb = false;

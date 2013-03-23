@@ -21,11 +21,10 @@ public class Cron extends Enemies implements Mover {
     private int oldX;
     private int oldY;
     private int randomSteps;
-    private int steps;
     private int generatedDirection;
-    private int stepIndex;
     private Stalker stalker;
     private Path path;
+    private int stepSize;
 
     public Cron() throws SlickException {
         leftAnimation = new Animation(Anim.getAnimation("resources/actors/cron_w", 1), 250);
@@ -35,8 +34,7 @@ public class Cron extends Enemies implements Mover {
         direction = Direction.WEST;
         randomSteps = 0;
         stalker = new Stalker();
-        stepIndex = 0;
-        steps = 0;
+        stepSize = 32;
     }
 
     @Override
@@ -48,12 +46,16 @@ public class Cron extends Enemies implements Mover {
     public void walk() {
         oldX = this.getX();
         oldY = this.getY();
-        if(stepIndex>steps-1)
-            stepIndex=0;
-        else
-        stepIndex++;
+        if (path != null) {
+            stepSize--;
+        }
+        else {
+            stepSize = 32;
+        }
+        if (stepSize == 0) {
+            stepSize = 32;
+        }
         stalk();
-        
         switch (generatedDirection) {
             case 0:
                 direction = Direction.NORTH;
@@ -75,67 +77,65 @@ public class Cron extends Enemies implements Mover {
                 break;
         }
         randomSteps--;
-
     }
 
-    public void move() {     
-        if (path.getStep(stepIndex).getX() > this.getX()) {
-            generatedDirection = 90;
-        }
-        if (path.getStep(stepIndex).getX() < this.getX()) {
-            generatedDirection = 270;
-        }
-        if (path.getStep(stepIndex).getY() > this.getY()) {
-            generatedDirection = 180;
-        }
-        if (path.getStep(stepIndex).getY() < this.getY()) {
-            generatedDirection = 0;
+    public void move() {
+        if (randomSteps == 0) {
+            Random r = new Random();
+            generatedDirection = r.nextInt(4) * 90;
+            randomSteps = r.nextInt(50) + 10;
         }
     }
 
-public void stalk(){
-        if (randomSteps==0) {
-            path = stalker.getPath(this, this.getX() / 32, this.getY() / 32, level.getPlayer().getX() / 32, level.getPlayer().getY() / 32);
-            stepIndex = 0;
+    public void stalk() {
+        if (stepSize == 32) {
+            path = stalker.getPath(this, this.getX() / 32, this.getY() / 32, (level.getPlayer().getX() + 10) / 32, (level.getPlayer().getY() + 10) / 32);
         }
-        if (path == null || randomSteps==0) {
-                Random r = new Random();
-                generatedDirection = r.nextInt(4) * 90;
-                randomSteps = r.nextInt(50) + 10;
-            }
-        else {
-            steps = path.getLength();
+        if (path == null) {
             move();
+        } else {
+            randomSteps = path.getLength() * 32;
+            if (path.getStep(1).getX() > this.getX() / 32) {
+                generatedDirection = 90;
+            }
+            if (path.getStep(1).getX() < this.getX() / 32) {
+                generatedDirection = 270;
+            }
+            if (path.getStep(1).getY() > this.getY() / 32) {
+                generatedDirection = 180;
+            }
+            if (path.getStep(1).getY() < this.getY() / 32) {
+                generatedDirection = 0;
+            }
         }
     }
 
 
-        /*    int z;
-         Player hrac = (Player) level.getPlayer();
-         Random r = new Random();
-         z = r.nextInt(2);
-         switch (z) {
-         case 0:
-         if (hrac.getX() < this.getX()) {
-         this.generatedDirection = 270;
-         } else {
-         this.generatedDirection = 90;
-         }
-         randomSteps = 45;
-         break;
-         case 1:
-         if (hrac.getY() < this.getY()) {
-         this.generatedDirection = 0;
-         } else {
-         this.generatedDirection = 180;
-         }
-         randomSteps = 45;
-         break;
-         } */
-
-        @Override
-        public void changeDirection() {
+    /*    int z;
+     Player hrac = (Player) level.getPlayer();
+     Random r = new Random();
+     z = r.nextInt(2);
+     switch (z) {
+     case 0:
+     if (hrac.getX() < this.getX()) {
+     this.generatedDirection = 270;
+     } else {
+     this.generatedDirection = 90;
+     }
+     randomSteps = 45;
+     break;
+     case 1:
+     if (hrac.getY() < this.getY()) {
+     this.generatedDirection = 0;
+     } else {
+     this.generatedDirection = 180;
+     }
+     randomSteps = 45;
+     break;
+     } */
+    @Override
+    public void changeDirection() {
         this.setPosition(oldX, oldY);
-            randomSteps = 0;
-        }
+        randomSteps = 0;
     }
+}

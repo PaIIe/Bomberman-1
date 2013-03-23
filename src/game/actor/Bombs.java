@@ -145,6 +145,7 @@ public class Bombs extends Actors {
             Walls o = (Walls) level.getMap().getWalls().toArray()[i];
             if (((o.getX() / 32) == (x / 32)) && ((o.getY() / 32) == (y / 32)) && (o instanceof Wall)) {
                 level.getMap().getWalls().remove(o);
+                level.getMap().getWallMap()[o.getX()/32][o.getY()/32]=0;
                 stat.incWallsDestroyed();
                 checkItem(o.getX(),o.getY());
                 try {

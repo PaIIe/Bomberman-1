@@ -11,12 +11,12 @@ import org.newdawn.slick.SlickException;
  *
  * @author Michal
  */
-public class Main {
+public class NewGame {
      
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws SlickException {
+    public NewGame() throws SlickException{
         AppGameContainer app;
         app = new AppGameContainer(new Game());
         app.setDisplayMode(640, 480, false);

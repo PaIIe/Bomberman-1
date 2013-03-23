@@ -26,6 +26,7 @@ public class Map {
     private TiledMap mapa;
     private Level level = Level.getLevel();
     private List<Walls> Walls;
+    private int[][] wallMap;
 
     public Map(Level level) {
         this.level = level;
@@ -35,6 +36,10 @@ public class Map {
         try {
             mapa = new TiledMap("resources/map/" + level + ".tmx");
             Walls = new ArrayList<Walls>();
+            wallMap=new int[mapa.getWidth()][];
+            for(int i = 0; i< mapa.getWidth(); i++){
+                wallMap[i]=new int[mapa.getHeight()];
+            }
             processMap();
         } catch (SlickException ex) {
             System.out.println("Chyba pri nacitani mapy");;
@@ -42,6 +47,12 @@ public class Map {
     }
 
     private void processMap() throws SlickException {
+        //vynuluje mapu stien
+        for(int x=0; x < mapa.getWidth(); x++){
+            for(int y=0; y<mapa.getHeight(); y++){
+                wallMap[x][y]=0;
+            }
+        }
         // detect all objects in map
         for (int i = 0; i < mapa.getObjectCount(0); i++) {
             switch (mapa.getObjectType(0, i)) {
@@ -94,6 +105,7 @@ public class Map {
         for (int i = 0; i < mapa.getObjectCount(1); i++) {
             wallX = mapa.getObjectX(1, i);
             wallY = mapa.getObjectY(1, i);
+            wallMap[wallX/32][wallY/32]=1;
             switch (mapa.getObjectType(1, i)) {
                 case "wall":
                     Wall stena = new Wall();
@@ -116,5 +128,9 @@ public class Map {
 
     public List<Walls> getWalls() {
         return Walls;
+    }
+    
+    public int[][] getWallMap(){
+        return wallMap;
     }
 }

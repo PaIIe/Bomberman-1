@@ -4,10 +4,10 @@
  */
 package bomberman;
 
-import game.actor.Actors;
 import game.Level;
 import game.MapObjects;
 import game.Statistics;
+import game.actor.Actors;
 import game.actor.Player;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.GameContainer;

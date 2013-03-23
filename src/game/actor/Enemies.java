@@ -34,7 +34,7 @@ public abstract class Enemies extends Actors{
                     level.getListOfObjects().remove(this);
                     stat.incEnemiesKilled();
                 }
-                if((o instanceof Bombs) || (o instanceof Items)){
+                if((o instanceof Bombs)){
                     changeDirection();
                 }
             }

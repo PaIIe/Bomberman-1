@@ -4,11 +4,6 @@
  */
 package game;
 
-import game.actor.Bombs;
-import game.actor.Blob;
-import game.actor.Flame;
-import game.actor.Player;
-import game.item.Items;
 import java.awt.geom.Rectangle2D;
 import org.newdawn.slick.Animation;
 

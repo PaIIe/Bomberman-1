@@ -48,10 +48,10 @@ public class Player extends Actors {
         rightAnimation = new Animation(Anim.getAnimation("resources/player/Bomberman_e", 3), 250);
         downAnimation = new Animation(Anim.getAnimation("resources/player/Bomberman_s", 3), 250);
         upAnimation = new Animation(Anim.getAnimation("resources/player/Bomberman_n", 3), 250);
-        puttingLeft = new Animation(Anim.getAnimation("resources/player/putbomb_w", 4), 150);
-        puttingRight = new Animation(Anim.getAnimation("resources/player/putbomb_e", 4), 150);
-        puttingUp = new Animation(Anim.getAnimation("resources/player/putbomb_n", 4), 150);
-        puttingDown = new Animation(Anim.getAnimation("resources/player/putbomb_s", 4), 150);
+        puttingLeft = new Animation(Anim.getAnimation("resources/player/putbomb_w", 4), 100);
+        puttingRight = new Animation(Anim.getAnimation("resources/player/putbomb_e", 4), 100);
+        puttingUp = new Animation(Anim.getAnimation("resources/player/putbomb_n", 4), 100);
+        puttingDown = new Animation(Anim.getAnimation("resources/player/putbomb_s", 4), 100);
         super.animation = this.downAnimation;
         direction = Direction.SOUTH;
         super.animation.stop();
@@ -98,19 +98,19 @@ public class Player extends Actors {
                 switch (direction) {
                     case NORTH:
                         animation = puttingUp;
-                        animation.setCurrentFrame(0);
+                        animation.restart();
                         break;
                     case SOUTH:
                         animation = puttingDown;
-                        animation.setCurrentFrame(0);
+                        animation.restart();
                         break;
                     case EAST:
                         animation = puttingRight;
-                        animation.setCurrentFrame(0);
+                        animation.restart();
                         break;
                     case WEST:
                         animation = puttingLeft;
-                        animation.setCurrentFrame(0);
+                        animation.restart();
                         break;
                 }
             }

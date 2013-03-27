@@ -10,9 +10,11 @@ import game.Statistics;
 import game.actor.Actors;
 import game.actor.Player;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.gui.TextField;
@@ -23,26 +25,39 @@ import org.newdawn.slick.gui.TextField;
  */
 public class Game extends BasicGame {
 
+    public static enum GameState {
+
+        PLAYING,
+        PAUSED,
+        FAILED,
+        FINISHED
+    }
     private Player hrac;
     private TextField text;
+    private TextField text2;
+    private TextField text3;
     private Level level;
-    private long playingTime;
-    private long startTime;
+    private int playingTime;
     private Statistics stat;
+    private final String levelName = "level";
+    private int levelNumber;
+    private int dyingTime;
 
     public Game() {
         super("Bomberman");
         stat = Statistics.getStatistics();
-      //  startTime = System.currentTimeMillis();
+        levelNumber = 1;
+        dyingTime = 150;
     }
 
     @Override
     public void init(GameContainer gc) throws SlickException {
         level = Level.getLevel();
-        level.loadLevel("level01w");
+        level.loadLevel(levelName + levelNumber);
         hrac = level.getPlayer();
         TrueTypeFont font = new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 14), true);
-        text = new TextField(gc, font, 150, 200, 200, 40);
+        text = new TextField(gc, font, 60, 200, 500, 30);
+        text2 = new TextField(gc, font, 210, 300, 210, 30);
 
     }
 
@@ -53,21 +68,45 @@ public class Game extends BasicGame {
             gc.exit();
         }
         if (input.isKeyPressed(Input.KEY_P)) {
-            if (!level.getPlayer().isPause()) {
-                level.getPlayer().setPause(true);
+            if (level.getGameState() != GameState.PAUSED) {
+                level.setGameState(GameState.PAUSED);
+                playingTime = stat.getPlayingTime();
             } else {
-                level.getPlayer().setPause(false);
+                level.setGameState(GameState.PLAYING);
             }
-            playingTime = (System.currentTimeMillis() - startTime) / 1000;
-       //     text.setText("Actual playing time is: " + playingTime);
+        }
+        if (level.getGameState() == GameState.FAILED) {
+            dyingTime--;
+            if (dyingTime == 0) {
+                gc.exit();
+            }
         }
 
-        if (!level.getPlayer().isPause()) {
+        if (level.getGameState() == GameState.FINISHED) {
+            if (!hrac.isStopTime()) {
+                playingTime = stat.getPlayingTime();
+                int minutes = playingTime / 60;
+                int seconds = playingTime % 60;
+                text.setText("  Playing time: " + minutes + " min " + seconds + "secs" + "  Enemies killed: " + stat.getEnemiesKilled() + "  Walls Destroyed: " + stat.getWallsDestroyed());
+            }
+            hrac.setStopTime(true);
+            if (input.isKeyPressed(Input.KEY_ENTER)) {
+                hrac.setStopTime(false);
+                levelNumber++;
+                if(levelNumber==3){
+                    gc.exit();
+                }
+                level.reloadLevel();
+                stat.restart();
+                init(gc);
+            }
+
+        }
+        if (level.getGameState() == GameState.PLAYING) {
             for (int x = 0; x < level.getListOfObjects().toArray().length; x++) {
                 MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
                 if (o instanceof Actors) {
                     ((Actors) o).act();
-
                 }
             }
 
@@ -81,13 +120,21 @@ public class Game extends BasicGame {
             o.getAnimation().draw(o.getX(), o.getY());
         }
         level.showWalls();
-        //     text.render(gc, grphcs);
-        if (level.getPlayer().isPause()) {
-            int minutes = stat.getPlayingTime() / 60;
-            int seconds = stat.getPlayingTime() % 60;
+        if (level.getGameState() == GameState.FINISHED) {
+            grphcs.setColor(Color.green);
+            grphcs.drawString("Level " + levelNumber + " completed", 240, 8);
+            grphcs.setColor(Color.white);
+            text.render(gc, grphcs);
+        }
+        if (level.getGameState() == GameState.FAILED) {
+            grphcs.setColor(Color.red);
+            grphcs.drawString("You died", 270, 8);
+        }
+        if (level.getGameState() == GameState.PAUSED) {
+            int minutes = playingTime / 60;
+            int seconds = playingTime % 60;
             grphcs.drawString("Actual playing time: " + minutes + " min " + seconds + " secs", 180, 8);
-       //     grphcs.drawString("Enemies killed: " + stat.getEnemiesKilled(), 180, 30);
-       //    grphcs.drawString("Walls Destroyed: " + stat.getWallsDestroyed(), 180, 50);
+
         }
     }
 }

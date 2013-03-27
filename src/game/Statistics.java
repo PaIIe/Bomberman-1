@@ -30,6 +30,13 @@ public class Statistics {
        
    } 
    
+   public void restart(){
+       enemiesKilled = 0;
+       wallsDestroyed = 0;
+       itemsUsed = 0;
+       startTime = System.currentTimeMillis();
+   }
+   
     public static Statistics getStatistics(){
         return instance;
     }

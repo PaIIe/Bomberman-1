@@ -23,7 +23,7 @@ public class Portal extends Items {
     
     @Override
     public boolean intersects(MapObjects actor) {    
-        Rectangle2D predmet = new Rectangle2D.Float(actor.getX()+2, actor.getY()+2, 28, 28);
+        Rectangle2D predmet = new Rectangle2D.Float(actor.getX()+6, actor.getY()+6, 20, 20);
         Rectangle2D objekt = new Rectangle2D.Float(this.getX()+15, this.getY()+15, this.animation.getWidth()-30, this.animation.getHeight()-30);
         return objekt.intersects(predmet);                    
     }

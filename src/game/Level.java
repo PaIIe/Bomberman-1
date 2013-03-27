@@ -4,6 +4,8 @@
  */
 package game;
 
+import bomberman.Game;
+import bomberman.Game.GameState;
 import game.actor.Player;
 import game.map.Map;
 import game.map.Wall;
@@ -18,9 +20,10 @@ import java.util.List;
 public class Level {
 
     private ArrayList<MapObjects> listOfObjects;
-    private static final Level instance = new Level();
+    private static Level instance = new Level();
     private Player player;
     private Map mapa = new Map(this);
+    private GameState gameState;
 
     private Level() {
         listOfObjects = new ArrayList<MapObjects>();
@@ -32,6 +35,7 @@ public class Level {
 
     public void loadLevel(String level) {
         mapa.loadMap(level);
+        this.gameState=GameState.PLAYING;
     }
 
     public void show() {
@@ -76,4 +80,23 @@ public class Level {
     public Map getMap() {
         return mapa;
     }
+    
+    public void reloadLevel(){
+        listOfObjects.clear();
+    }
+
+    /**
+     * @return the gameState
+     */
+    public Game.GameState getGameState() {
+        return gameState;
+    }
+
+    /**
+     * @param gameState the gameState to set
+     */
+    public void setGameState(GameState gameState) {
+        this.gameState = gameState;
+    }
+
 }

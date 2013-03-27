@@ -4,6 +4,7 @@
  */
 package game.actor;
 
+import bomberman.Game.GameState;
 import game.Anim;
 import game.Level;
 import game.MapObjects;
@@ -30,18 +31,19 @@ public class Player extends Actors {
     private Animation puttingRight;
     private Animation puttingDown;
     private Animation puttingUp;
+    private Animation celebrating;
+    private Animation dying;
     private Direction direction;
     private int bombsCount;
     private int range;
     private int speed;
     private int speedTime;
-    private boolean isAlive = true;
     private boolean puttingBomb = false;
     private int puttingTime = 0;
+    private boolean stopTime;
     private Level level = Level.getLevel();
     private Statistics stat = Statistics.getStatistics();
     private Input input = new Input(480);
-    private boolean pause = false;
 
     public Player() throws SlickException {
         leftAnimation = new Animation(Anim.getAnimation("resources/player/Bomberman_w", 3), 250);
@@ -52,6 +54,8 @@ public class Player extends Actors {
         puttingRight = new Animation(Anim.getAnimation("resources/player/putbomb_e", 4), 100);
         puttingUp = new Animation(Anim.getAnimation("resources/player/putbomb_n", 4), 100);
         puttingDown = new Animation(Anim.getAnimation("resources/player/putbomb_s", 4), 100);
+        celebrating = new Animation(Anim.getAnimation("resources/player/celebrating", 8),300);
+        dying = new Animation(Anim.getAnimation("resources/player/dying", 9),300);
         super.animation = this.downAnimation;
         direction = Direction.SOUTH;
         super.animation.stop();
@@ -59,6 +63,7 @@ public class Player extends Actors {
         range = 1;
         speed = 1;
         speedTime = 0;
+        stopTime=false;
     }
 
     @Override
@@ -73,6 +78,7 @@ public class Player extends Actors {
                     bomba.setPosition((this.getX() + 15) / 32 * 32, (this.getY() + 15) / 32 * 32);
                     level.getMap().getWallMap()[bomba.getX()/32][bomba.getY()/32]=1;
                 } catch (SlickException ex) {
+                    ex.printStackTrace();
                 }
                 puttingBomb = false;
             }
@@ -85,9 +91,6 @@ public class Player extends Actors {
         }
         putBomb();
         walk();
-        if (!isAlive) {
-            System.exit(0);
-        }
     }
 
     public void putBomb() {
@@ -152,10 +155,12 @@ public class Player extends Actors {
             MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
             if (o.intersects(this)) {
                 if (o instanceof Portal){
-                    this.setPause(true);
+                    level.setGameState(GameState.FINISHED);
+                    this.animation=celebrating;
                 }
                 if (o instanceof Enemies || o instanceof Flame) {
-                    this.isAlive = false;
+                    animation = dying;
+                    level.setGameState(GameState.FAILED);
                 }
                 if (o instanceof Bombs) {
                     if (!((Bombs) o).canIntersectWithPlayer()) {
@@ -198,16 +203,17 @@ public class Player extends Actors {
     }
 
     /**
-     * @return the pause
+     * @return the stopTime
      */
-    public boolean isPause() {
-        return pause;
+    public boolean isStopTime() {
+        return stopTime;
     }
 
     /**
-     * @param pause the pause to set
+     * @param stopTime the stopTime to set
      */
-    public void setPause(boolean pause) {
-        this.pause = pause;
+    public void setStopTime(boolean stopTime) {
+        this.stopTime = stopTime;
     }
+   
 }

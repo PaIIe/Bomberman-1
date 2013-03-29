@@ -88,32 +88,22 @@ public class Cron extends Enemies implements Mover {
                 case 0:
                     if (level.getMap().getWallMap()[cronX][cronY - 1] == 1) {
                         move();
-                    } else {
-                        this.y--;
-                    }
+                    } 
                     break;
                 case 90:
                     if (level.getMap().getWallMap()[cronX + 1][cronY] == 1) {
                         move();
-                    } else {
-                        this.animation = rightAnimation;
-                        this.x++;
-                    }
+                    } 
                     break;
                 case 180:
                     if (level.getMap().getWallMap()[cronX][cronY + 1] == 1) {
                         move();
-                    } else {
-                        this.y++;
-                    }
+                    } 
                     break;
                 case 270:
                     if (level.getMap().getWallMap()[cronX-1][cronY] == 1) {
                         move();
-                    } else {
-                    this.animation = leftAnimation;
-                    this.x--;
-                    }
+                    }                  
                     break;
             }
             randomSteps = 32;
@@ -121,7 +111,7 @@ public class Cron extends Enemies implements Mover {
     }
 
     public void stalk() {
-        if (stepSize == 32) {
+        if (randomSteps == 0) {
             path = stalker.getPath(this, this.getX() / 32, this.getY() / 32, (level.getPlayer().getX() + 10) / 32, (level.getPlayer().getY() + 10) / 32);
         }
         if (path == null) {

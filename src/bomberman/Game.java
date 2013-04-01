@@ -4,17 +4,18 @@
  */
 package bomberman;
 
+import game.score.BestScore;
 import game.Level;
 import game.MapObjects;
-import game.Statistics;
+import game.score.Score;
 import game.actor.Actors;
 import game.actor.Player;
+import javax.swing.JFrame;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
-import org.newdawn.slick.KeyListener;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.TrueTypeFont;
 import org.newdawn.slick.gui.TextField;
@@ -38,16 +39,18 @@ public class Game extends BasicGame {
     private TextField text3;
     private Level level;
     private int playingTime;
-    private Statistics stat;
+    private Score stat;
     private final String levelName = "level";
     private int levelNumber;
     private int dyingTime;
+    private JFrame jFrame;
 
-    public Game() {
+    public Game(JFrame jFrame) {
         super("Bomberman");
-        stat = Statistics.getStatistics();
+        stat = Score.getScore();
         levelNumber = 1;
         dyingTime = 150;
+        this.jFrame = jFrame;
     }
 
     @Override
@@ -56,7 +59,7 @@ public class Game extends BasicGame {
         level.loadLevel(levelName + levelNumber);
         hrac = level.getPlayer();
         TrueTypeFont font = new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 14), true);
-        text = new TextField(gc, font, 60, 200, 500, 30);
+        text = new TextField(gc, font, 60, 200, 500, 100);
         text2 = new TextField(gc, font, 210, 300, 210, 30);
 
     }
@@ -84,10 +87,14 @@ public class Game extends BasicGame {
 
         if (level.getGameState() == GameState.FINISHED) {
             if (!hrac.isStopTime()) {
+                BestScore bs = level.getBestScore();
+                bs.addScore(stat);
+                jFrame.setVisible(true);
+                text.setText(bs.toString());
                 playingTime = stat.getPlayingTime();
                 int minutes = playingTime / 60;
                 int seconds = playingTime % 60;
-                text.setText("  Playing time: " + minutes + " min " + seconds + "secs" + "  Enemies killed: " + stat.getEnemiesKilled() + "  Walls Destroyed: " + stat.getWallsDestroyed());
+           //     text.setText("  Playing time: " + minutes + " min " + seconds + "secs" + "  Enemies killed: " + stat.getEnemiesKilled() + "  Walls Destroyed: " + stat.getWallsDestroyed());
             }
             hrac.setStopTime(true);
             if (input.isKeyPressed(Input.KEY_ENTER)) {

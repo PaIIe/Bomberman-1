@@ -8,7 +8,7 @@ import bomberman.Game.GameState;
 import game.Anim;
 import game.Level;
 import game.MapObjects;
-import game.Statistics;
+import game.score.Score;
 import game.item.BombsUp;
 import game.item.RangeUp;
 import game.item.SpeedUp;
@@ -27,6 +27,10 @@ public class Player extends Actors {
     private Animation rightAnimation;
     private Animation downAnimation;
     private Animation upAnimation;
+    private Animation speedLeftAnimation;
+    private Animation speedRightAnimation;
+    private Animation speedDownAnimation;
+    private Animation speedUpAnimation;
     private Animation puttingLeft;
     private Animation puttingRight;
     private Animation puttingDown;
@@ -42,7 +46,7 @@ public class Player extends Actors {
     private int puttingTime = 0;
     private boolean stopTime;
     private Level level = Level.getLevel();
-    private Statistics stat = Statistics.getStatistics();
+    private Score stat = Score.getScore();
     private Input input = new Input(480);
 
     public Player() throws SlickException {
@@ -50,6 +54,10 @@ public class Player extends Actors {
         rightAnimation = new Animation(Anim.getAnimation("resources/player/Bomberman_e", 3), 250);
         downAnimation = new Animation(Anim.getAnimation("resources/player/Bomberman_s", 3), 250);
         upAnimation = new Animation(Anim.getAnimation("resources/player/Bomberman_n", 3), 250);
+        speedLeftAnimation = new Animation(Anim.getAnimation("resources/player/speedy_w", 1), 250);
+        speedRightAnimation = new Animation(Anim.getAnimation("resources/player/speedy_e", 1), 250);
+        speedDownAnimation = new Animation(Anim.getAnimation("resources/player/speedy_s", 1), 250);
+        speedUpAnimation = new Animation(Anim.getAnimation("resources/player/speedy_n", 1), 250);
         puttingLeft = new Animation(Anim.getAnimation("resources/player/putbomb_w", 4), 100);
         puttingRight = new Animation(Anim.getAnimation("resources/player/putbomb_e", 4), 100);
         puttingUp = new Animation(Anim.getAnimation("resources/player/putbomb_n", 4), 100);
@@ -86,7 +94,7 @@ public class Player extends Actors {
         if (speedTime > 0) {
             speedTime--;
             if (speedTime == 0) {
-                speed--;
+                speed-=2;
             }
         }
         putBomb();
@@ -126,22 +134,38 @@ public class Player extends Actors {
         int hracY = this.getY();
         if (!puttingBomb) {
             if (input.isKeyDown(Input.KEY_LEFT)) {
+                if(speedTime>0){
+                    this.animation = this.speedLeftAnimation;
+                } else {
                 this.animation = this.leftAnimation;
+                }
                 direction = Direction.WEST;
                 this.animation.start();
                 this.x -= speed;
             } else if (input.isKeyDown(Input.KEY_RIGHT)) {
+                if(speedTime>0){
+                    this.animation = this.speedRightAnimation;
+                } else {
                 this.animation = this.rightAnimation;
+                }
                 direction = Direction.EAST;
                 this.animation.start();
                 this.x += speed;
             } else if (input.isKeyDown(Input.KEY_DOWN)) {
+                if(speedTime>0){
+                    this.animation = this.speedDownAnimation;
+                } else {       
                 this.animation = this.downAnimation;
+                }
                 direction = Direction.SOUTH;
                 this.animation.start();
                 this.y += speed;
             } else if (input.isKeyDown(Input.KEY_UP)) {
+                if(speedTime>0){
+                    this.animation = this.speedUpAnimation;
+                } else {
                 this.animation = this.upAnimation;
+                }
                 direction = Direction.NORTH;
                 this.animation.start();
                 this.y -= speed;
@@ -179,7 +203,7 @@ public class Player extends Actors {
                 }
                 if (o instanceof SpeedUp) {
                     level.getListOfObjects().remove(o);
-                    speed++;
+                    speed+=2;
                     speedTime = 1000;
                     stat.incItemsUsed();
                 }

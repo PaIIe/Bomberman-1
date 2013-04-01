@@ -7,7 +7,7 @@ package game.actor;
 import game.Anim;
 import game.Level;
 import game.MapObjects;
-import game.Statistics;
+import game.score.Score;
 import game.item.Items;
 import game.map.Wall;
 import game.map.Walls;
@@ -25,7 +25,7 @@ public class Bombs extends Actors {
     private Animation explodingBomb;
     private boolean exploded;
     private Level level = Level.getLevel();
-    private Statistics stat = Statistics.getStatistics();
+    private Score stat = Score.getScore();
     private boolean intersectWithPlayer;
 
     public Bombs() throws SlickException {

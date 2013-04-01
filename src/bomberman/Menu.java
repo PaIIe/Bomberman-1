@@ -94,8 +94,8 @@ public class Menu extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         try {
             this.setVisible(false);
-            this.dispose();       
-            NewGame newGame = new NewGame();
+         //   this.dispose();       
+            NewGame newGame = new NewGame(this);
             
         } catch (SlickException ex) {
             JOptionPane.showMessageDialog(rootPane, "Unable to start new game", "ERROR", JOptionPane.ERROR_MESSAGE);

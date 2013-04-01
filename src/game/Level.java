@@ -10,6 +10,7 @@ import game.actor.Player;
 import game.map.Map;
 import game.map.Wall;
 import game.map.Walls;
+import game.score.BestScore;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +25,11 @@ public class Level {
     private Player player;
     private Map mapa = new Map(this);
     private GameState gameState;
+    private BestScore bestScore;
 
     private Level() {
         listOfObjects = new ArrayList<MapObjects>();
+        bestScore = new BestScore();
     }
 
     public static Level getLevel() {
@@ -97,6 +100,13 @@ public class Level {
      */
     public void setGameState(GameState gameState) {
         this.gameState = gameState;
+    }
+
+    /**
+     * @return the bestScore
+     */
+    public BestScore getBestScore() {
+        return bestScore;
     }
 
 }

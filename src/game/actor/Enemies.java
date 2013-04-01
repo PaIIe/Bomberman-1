@@ -6,7 +6,7 @@ package game.actor;
 
 import game.Level;
 import game.MapObjects;
-import game.Statistics;
+import game.score.Score;
 import game.item.Items;
 import java.awt.geom.Rectangle2D;
 import org.newdawn.slick.Animation;
@@ -20,7 +20,7 @@ public abstract class Enemies extends Actors{
     protected Animation rightAnimation;
     protected Direction direction;
     protected Level level = Level.getLevel();
-    private Statistics stat = Statistics.getStatistics();
+    private Score stat = Score.getScore();
    
     @Override
     public void act() {

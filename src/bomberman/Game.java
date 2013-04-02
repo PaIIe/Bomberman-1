@@ -45,7 +45,7 @@ public class Game extends BasicGame {
     private int dyingTime;
     private JFrame jFrame;
 
-    public Game(JFrame jFrame) {
+    public Game() {
         super("Bomberman");
         stat = Score.getScore();
         levelNumber = 1;
@@ -89,7 +89,6 @@ public class Game extends BasicGame {
             if (!hrac.isStopTime()) {
                 BestScore bs = level.getBestScore();
                 bs.addScore(stat);
-                jFrame.setVisible(true);
                 text.setText(bs.toString());
                 playingTime = stat.getPlayingTime();
                 int minutes = playingTime / 60;

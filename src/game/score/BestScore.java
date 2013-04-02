@@ -66,6 +66,9 @@ public class BestScore implements Iterable<Score> {
     PreparedStatement pstm = connection.prepareStatement(DatabaseSetting.QUERY_ADD_BEST_TIME);
     pstm.setString(1, score.getName());
     pstm.setInt(2, score.getPlayingTime());
+    pstm.setInt(3, score.getEnemiesKilled());
+    pstm.setInt(4, score.getWallsDestroyed());
+    pstm.setInt(5, score.getItemsUsed());
     pstm.execute();
     pstm.close();
     connection.close();
@@ -111,7 +114,7 @@ public class BestScore implements Iterable<Score> {
         int i = 1;
         selectFromDB();
         for (Score sc : bestScore) {
-            f.format("%d. %s  %d secs            %d                  %d              %d\n", i, sc.getName(), sc.getPlayingTime(),sc.getEnemiesKilled(), sc.getWallsDestroyed(), sc.getItemsUsed());
+            f.format("%d. %s         %d secs            %d            %d            %d\n", i, sc.getName(), sc.getPlayingTime(),sc.getEnemiesKilled(), sc.getWallsDestroyed(), sc.getItemsUsed());
             i++;
         }
         return f.toString();

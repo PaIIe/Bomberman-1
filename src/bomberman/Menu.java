@@ -95,7 +95,7 @@ public class Menu extends javax.swing.JFrame {
         try {
             this.setVisible(false);
          //   this.dispose();       
-            NewGame newGame = new NewGame(this);
+            NewGame newGame = new NewGame();
             
         } catch (SlickException ex) {
             JOptionPane.showMessageDialog(rootPane, "Unable to start new game", "ERROR", JOptionPane.ERROR_MESSAGE);

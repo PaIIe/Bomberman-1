@@ -8,7 +8,9 @@ import game.Anim;
 import game.Level;
 import game.MapObjects;
 import game.item.Items;
+import game.map.Portal;
 import java.awt.geom.Rectangle2D;
+import java.util.logging.Logger;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 
@@ -19,6 +21,9 @@ import org.newdawn.slick.SlickException;
 public class Flame extends Actors{
     private int time;
     private Level level = Level.getLevel();
+    private boolean broomsMode = false;
+    private int portalX;
+    private int portalY;
     
     public Flame(Direction direction) throws SlickException{
         if(direction==Direction.NORTH || direction==Direction.SOUTH){
@@ -34,12 +39,29 @@ public class Flame extends Actors{
     public void act() {
          for (int x = 0; x < level.getListOfObjects().toArray().length; x++) {
             MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
-            if(o.intersects(this) && o instanceof Items && ((Items)o).isVisible()){
+            if(o.intersects(this) && o instanceof Items && ((Items)o).isVisible() && !(o instanceof Portal)){
                 level.removeFromLevel(o);
-            }                      
+            }
+            if(o instanceof Portal && o.intersects(this) && ((Portal)o).isVisible()){
+                broomsMode = true;
+                portalX = o.getX();
+                portalY = o.getY();
+            }
         }
         if(time==0){
             level.getListOfObjects().remove(this);
+            if(broomsMode){
+                for(int i=0; i<5; i++){
+                    try {
+                        Broom broom = new Broom();
+                        broom.setPosition(portalX, portalY);
+                        level.addToLevel(broom);
+                    } catch (SlickException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                broomsMode=false;
+            }
         }
         else{
             time--;

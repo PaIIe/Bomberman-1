@@ -10,6 +10,7 @@ import game.actor.Broom;
 import game.actor.Cron;
 import game.actor.Player;
 import game.item.BombsUp;
+import game.item.KickUp;
 import game.item.RangeUp;
 import game.item.SpeedUp;
 import java.util.ArrayList;
@@ -86,6 +87,11 @@ public class Map {
                     SpeedUp speed = new SpeedUp();
                     speed.setPosition(mapa.getObjectX(0, i), mapa.getObjectY(0, i));
                     level.addToLevel(speed);
+                    break;
+                case "kick":
+                    KickUp kick = new KickUp();
+                    kick.setPosition(mapa.getObjectX(0, i), mapa.getObjectY(0, i));
+                    level.addToLevel(kick);
                     break;
                 case "range":
                     RangeUp range = new RangeUp();

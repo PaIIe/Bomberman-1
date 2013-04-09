@@ -10,6 +10,7 @@ import game.Level;
 import game.MapObjects;
 import game.score.Score;
 import game.item.BombsUp;
+import game.item.KickUp;
 import game.item.RangeUp;
 import game.item.SpeedUp;
 import game.map.Portal;
@@ -42,6 +43,7 @@ public class Player extends Actors {
     private int range;
     private int speed;
     private int speedTime;
+    private int kickTime;
     private boolean puttingBomb = false;
     private int puttingTime = 0;
     private boolean stopTime;
@@ -62,8 +64,8 @@ public class Player extends Actors {
         puttingRight = new Animation(Anim.getAnimation("resources/player/putbomb_e", 4), 100);
         puttingUp = new Animation(Anim.getAnimation("resources/player/putbomb_n", 4), 100);
         puttingDown = new Animation(Anim.getAnimation("resources/player/putbomb_s", 4), 100);
-        celebrating = new Animation(Anim.getAnimation("resources/player/celebrating", 8),300);
-        dying = new Animation(Anim.getAnimation("resources/player/dying", 9),300);
+        celebrating = new Animation(Anim.getAnimation("resources/player/celebrating", 8), 300);
+        dying = new Animation(Anim.getAnimation("resources/player/dying", 9), 300);
         super.animation = this.downAnimation;
         direction = Direction.SOUTH;
         super.animation.stop();
@@ -71,7 +73,8 @@ public class Player extends Actors {
         range = 1;
         speed = 1;
         speedTime = 0;
-        stopTime=false;
+        kickTime = 0;
+        stopTime = false;
     }
 
     @Override
@@ -84,7 +87,7 @@ public class Player extends Actors {
                     bomba = new Bombs();
                     level.addToLevel(bomba);
                     bomba.setPosition((this.getX() + 15) / 32 * 32, (this.getY() + 15) / 32 * 32);
-                    level.getMap().getWallMap()[bomba.getX()/32][bomba.getY()/32]=1;
+                    level.getMap().getWallMap()[bomba.getX() / 32][bomba.getY() / 32] = 1;
                 } catch (SlickException ex) {
                     ex.printStackTrace();
                 }
@@ -94,8 +97,11 @@ public class Player extends Actors {
         if (speedTime > 0) {
             speedTime--;
             if (speedTime == 0) {
-                speed-=2;
+                speed -= 2;
             }
+        }
+        if (kickTime > 0) {
+            kickTime--;
         }
         putBomb();
         walk();
@@ -134,37 +140,37 @@ public class Player extends Actors {
         int hracY = this.getY();
         if (!puttingBomb) {
             if (input.isKeyDown(Input.KEY_LEFT)) {
-                if(speedTime>0){
+                if (speedTime > 0) {
                     this.animation = this.speedLeftAnimation;
                 } else {
-                this.animation = this.leftAnimation;
+                    this.animation = this.leftAnimation;
                 }
                 direction = Direction.WEST;
                 this.animation.start();
                 this.x -= speed;
             } else if (input.isKeyDown(Input.KEY_RIGHT)) {
-                if(speedTime>0){
+                if (speedTime > 0) {
                     this.animation = this.speedRightAnimation;
                 } else {
-                this.animation = this.rightAnimation;
+                    this.animation = this.rightAnimation;
                 }
                 direction = Direction.EAST;
                 this.animation.start();
                 this.x += speed;
             } else if (input.isKeyDown(Input.KEY_DOWN)) {
-                if(speedTime>0){
+                if (speedTime > 0) {
                     this.animation = this.speedDownAnimation;
-                } else {       
-                this.animation = this.downAnimation;
+                } else {
+                    this.animation = this.downAnimation;
                 }
                 direction = Direction.SOUTH;
                 this.animation.start();
                 this.y += speed;
             } else if (input.isKeyDown(Input.KEY_UP)) {
-                if(speedTime>0){
+                if (speedTime > 0) {
                     this.animation = this.speedUpAnimation;
                 } else {
-                this.animation = this.upAnimation;
+                    this.animation = this.upAnimation;
                 }
                 direction = Direction.NORTH;
                 this.animation.start();
@@ -178,9 +184,9 @@ public class Player extends Actors {
         for (int x = 0; x < level.getListOfObjects().toArray().length; x++) {
             MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
             if (o.intersects(this)) {
-                if (o instanceof Portal){
+                if (o instanceof Portal) {
                     level.setGameState(GameState.FINISHED);
-                    this.animation=celebrating;
+                    this.animation = celebrating;
                 }
                 if (o instanceof Enemies || o instanceof Flame) {
                     animation = dying;
@@ -188,7 +194,12 @@ public class Player extends Actors {
                 }
                 if (o instanceof Bombs) {
                     if (!((Bombs) o).canIntersectWithPlayer()) {
-                        this.setPosition(hracX, hracY);
+                        if (kickTime > 0) {
+                            kickBomb((Bombs) o);
+                            this.setPosition(hracX, hracY);
+                        } else {
+                            this.setPosition(hracX, hracY);
+                        }
                     }
                 }
                 if (o instanceof BombsUp) {
@@ -203,8 +214,13 @@ public class Player extends Actors {
                 }
                 if (o instanceof SpeedUp) {
                     level.getListOfObjects().remove(o);
-                    speed+=2;
+                    speed += 2;
                     speedTime = 1000;
+                    stat.incItemsUsed();
+                }
+                if (o instanceof KickUp) {
+                    level.getListOfObjects().remove(o);
+                    kickTime = 2000;
                     stat.incItemsUsed();
                 }
             }
@@ -215,14 +231,61 @@ public class Player extends Actors {
         }
     }
 
-    /**
-     * @return the range
-     */
-    public int getRange() {
+    public void kickBomb(Bombs bomb) {
+        int r=1;
+        switch (direction) {          
+            case EAST:
+                bomb.setX(32 * r);
+                while (!bomb.intersectWithWall()) {
+                    bomb.setX(-(32 * r));
+                    r++;
+                    bomb.setX(32 * r);
+                }
+                bomb.setX(-(32 * r));
+                bomb.makeMove(direction, (r-1)*16);
+                break;
+
+            case WEST:
+                bomb.setX(-(32 * r));
+                while (!bomb.intersectWithWall()) {
+                    bomb.setX(32 * r);
+                    r++;
+                    bomb.setX(-(32 * r));
+                }
+                bomb.setX(32 * r);
+                bomb.makeMove(direction, (r-1)*16);
+                break;
+            case SOUTH:
+                bomb.setY(32 * r);
+                while (!bomb.intersectWithWall()) {
+                    bomb.setY(-(32 * r));
+                    r++;
+                    bomb.setY(32 * r);
+                }
+                bomb.setY(-(32 * r));
+                bomb.makeMove(direction, (r-1)*16);
+                break;
+            case NORTH:
+                bomb.setY(-(32 * r));
+                while (!bomb.intersectWithWall()) {
+                    bomb.setY(32 * r);
+                    r++;
+                    bomb.setY(-(32 * r));
+                }
+                bomb.setY(32 * r);
+                bomb.makeMove(direction, (r-1)*16);
+                break;
+        }
+    }
+
+/**
+ * @return the range
+ */
+public int getRange() {
         return range;
     }
 
-    public void setBomb() {
+    public void incBomb() {
         bombsCount++;
     }
 

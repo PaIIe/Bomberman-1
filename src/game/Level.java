@@ -19,7 +19,6 @@ import java.util.List;
  * @author Michal
  */
 public class Level {
-
     private ArrayList<MapObjects> listOfObjects;
     private static Level instance = new Level();
     private Player player;

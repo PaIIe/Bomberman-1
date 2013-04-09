@@ -5,7 +5,6 @@
 package game.map;
 
 import game.MapObjects;
-import game.actor.Cron;
 import java.awt.geom.Rectangle2D;
 
 /**

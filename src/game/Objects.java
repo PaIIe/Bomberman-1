@@ -12,6 +12,10 @@ import org.newdawn.slick.Animation;
  */
 public interface Objects {
     
+    /**
+     *
+     * @return
+     */
     public int getX();
 
     public int getY();

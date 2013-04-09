@@ -7,10 +7,10 @@ package game.actor;
 import game.Anim;
 import game.Level;
 import game.MapObjects;
-import game.score.Score;
 import game.item.Items;
 import game.map.Wall;
 import game.map.Walls;
+import game.score.Score;
 import java.awt.geom.Rectangle2D;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
@@ -27,13 +27,17 @@ public class Bombs extends Actors {
     private Level level = Level.getLevel();
     private Score stat = Score.getScore();
     private boolean intersectWithPlayer;
+    private final static int STEP = 2;
+    private int steps;
+    private Direction direction;
 
     public Bombs() throws SlickException {
         animation = new Animation(Anim.getAnimation("resources/actors/bomb", 2), 200);
         explodingBomb = new Animation(Anim.getAnimation("resources/actors/expbomb", 1), 20);
-        explodeTime = 300;
+        explodeTime = 200;
         exploded = false;
         intersectWithPlayer = true;
+        steps = 0;
 
     }
 
@@ -42,8 +46,26 @@ public class Bombs extends Actors {
         if (!level.getPlayer().intersects(this)) {
             this.intersectWithPlayer = false;
         }
+        if (steps > 0) {
+            switch (direction) {
+                case EAST:
+                    this.x += STEP;
+                    break;
+                
+                case WEST:
+                    this.x -= STEP;
+                    break;
 
-        if (!exploded) {
+                case NORTH:
+                    this.y -= STEP;
+                    break;
+
+                case SOUTH:
+                    this.y += STEP;
+                    break;
+            }
+            steps--;
+        } else if (!exploded) {
             if (explodeTime == 0) {
                 animation = explodingBomb;
                 exploded = true;
@@ -57,9 +79,9 @@ public class Bombs extends Actors {
             }
         } else {
             if (explodeTime == 0) {
-                level.getMap().getWallMap()[this.getX()/32][this.getY()/32]=0;
+                level.getMap().getWallMap()[this.getX() / 32][this.getY() / 32] = 0;
                 level.getListOfObjects().remove(this);
-                level.getPlayer().setBomb();
+                level.getPlayer().incBomb();
             } else {
                 explodeTime--;
             }
@@ -146,9 +168,9 @@ public class Bombs extends Actors {
             Walls o = (Walls) level.getMap().getWalls().toArray()[i];
             if (((o.getX() / 32) == (x / 32)) && ((o.getY() / 32) == (y / 32)) && (o instanceof Wall)) {
                 level.getMap().getWalls().remove(o);
-                level.getMap().getWallMap()[o.getX()/32][o.getY()/32]=0;
+                level.getMap().getWallMap()[o.getX() / 32][o.getY() / 32] = 0;
                 stat.incWallsDestroyed();
-                checkItem(o.getX(),o.getY());
+                checkItem(o.getX(), o.getY());
                 try {
                     WallInFire wall = new WallInFire();
                     wall.setPosition(o.getX(), o.getY());
@@ -181,5 +203,18 @@ public class Bombs extends Actors {
      */
     public boolean canIntersectWithPlayer() {
         return intersectWithPlayer;
+    }
+
+    public void setX(int x) {
+        this.x += x;
+    }
+
+    public void setY(int y) {
+        this.y += y;
+    }
+
+    public void makeMove(Direction direction, int steps) {
+        this.direction = direction;
+        this.steps = steps;
     }
 }

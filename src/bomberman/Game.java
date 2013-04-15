@@ -59,7 +59,7 @@ public class Game extends BasicGame {
         level.loadLevel(levelName + levelNumber);
         hrac = level.getPlayer();
         TrueTypeFont font = new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 14), true);
-        text = new TextField(gc, font, 60, 200, 500, 100);
+        text = new TextField(gc, font, 60, 200, 500, 25);
         text2 = new TextField(gc, font, 210, 300, 210, 30);
 
     }
@@ -86,20 +86,17 @@ public class Game extends BasicGame {
         }
 
         if (level.getGameState() == GameState.FINISHED) {
-            if (!hrac.isStopTime()) {
-                BestScore bs = level.getBestScore();
-                bs.addScore(stat);
-                text.setText(bs.toString());
+            if (!hrac.isStopTime() && levelNumber<4) {
                 playingTime = stat.getPlayingTime();
                 int minutes = playingTime / 60;
                 int seconds = playingTime % 60;
-           //     text.setText("  Playing time: " + minutes + " min " + seconds + "secs" + "  Enemies killed: " + stat.getEnemiesKilled() + "  Walls Destroyed: " + stat.getWallsDestroyed());
+                text.setText("  Playing time: " + minutes + " min " + seconds + "secs" + "   Enemies killed: " + stat.getEnemiesKilled() + "   Walls Destroyed: " + stat.getWallsDestroyed());
             }
             hrac.setStopTime(true);
             if (input.isKeyPressed(Input.KEY_ENTER)) {
                 hrac.setStopTime(false);
                 levelNumber++;
-                if(levelNumber==3){
+                if(levelNumber==5){
                     gc.exit();
                 }
                 level.reloadLevel();
@@ -126,7 +123,13 @@ public class Game extends BasicGame {
             o.getAnimation().draw(o.getX(), o.getY());
         }
         level.showWalls();
-        if (level.getGameState() == GameState.FINISHED) {
+        if(levelNumber==4){
+         grphcs.setColor(Color.green);
+            grphcs.drawString("Game completed", 250, 200);
+        }
+            
+        
+        if (level.getGameState() == GameState.FINISHED && levelNumber<4) {
             grphcs.setColor(Color.green);
             grphcs.drawString("Level " + levelNumber + " completed", 240, 8);
             grphcs.setColor(Color.white);

@@ -5,6 +5,8 @@
 package bomberman;
 
 import game.Level;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 /**
  *
@@ -18,6 +20,10 @@ public class Score extends javax.swing.JDialog {
      */
     public Score(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() / 2) - 130);
+        int y = (int) ((dimension.getHeight() / 2) - 160);
+        this.setLocation(x, y);
         initComponents();
         jTextField1.setText("     Name  |        Time       |    EK    |    WD    |    IU   ");
         jTextField1.setEditable(false);

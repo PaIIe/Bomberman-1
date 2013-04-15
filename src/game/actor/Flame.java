@@ -10,7 +10,6 @@ import game.MapObjects;
 import game.item.Items;
 import game.map.Portal;
 import java.awt.geom.Rectangle2D;
-import java.util.logging.Logger;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 

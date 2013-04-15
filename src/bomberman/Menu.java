@@ -4,6 +4,8 @@
  */
 package bomberman;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -18,11 +20,15 @@ public class Menu extends javax.swing.JFrame {
     /**
      * Creates new form Menu
      */
-    public Menu() {           
-                this.setContentPane(new JLabel(new ImageIcon("resources/menu.png")));
-         
-                this.pack(); 
-                this.setVisible(true);
+    public Menu() {
+        this.setContentPane(new JLabel(new ImageIcon("resources/menu.png")));
+        Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = (int) ((dimension.getWidth() / 2) - 160);
+        int y = (int) ((dimension.getHeight() / 2) - 160);
+        this.setLocation(x, y);
+        //   this.setLocationRelativeTo(null);
+        this.pack();
+        this.setVisible(true);
         initComponents();
     }
 
@@ -94,13 +100,13 @@ public class Menu extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         try {
             this.setVisible(false);
-         //   this.dispose();       
+            this.dispose();       
             NewGame newGame = new NewGame();
-            
+
         } catch (SlickException ex) {
             JOptionPane.showMessageDialog(rootPane, "Unable to start new game", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        
+
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked

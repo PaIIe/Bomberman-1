@@ -40,6 +40,7 @@ public class Game extends BasicGame {
     private Level level;
     private int playingTime;
     private Score stat;
+    private BestScore bestScore=new BestScore();
     private final String levelName = "level";
     private int levelNumber;
     private int dyingTime;
@@ -86,8 +87,9 @@ public class Game extends BasicGame {
         }
 
         if (level.getGameState() == GameState.FINISHED) {
-            if (!hrac.isStopTime() && levelNumber<4) {
+            if (!hrac.isStopTime() && levelNumber<5) {
                 playingTime = stat.getPlayingTime();
+                bestScore.addScore(stat);
                 int minutes = playingTime / 60;
                 int seconds = playingTime % 60;
                 text.setText("  Playing time: " + minutes + " min " + seconds + "secs" + "   Enemies killed: " + stat.getEnemiesKilled() + "   Walls Destroyed: " + stat.getWallsDestroyed());
@@ -97,7 +99,7 @@ public class Game extends BasicGame {
                 hrac.setStopTime(false);
                 levelNumber++;
                 if(levelNumber==5){
-                    gc.exit();
+                    System.exit(0);                  
                 }
                 level.reloadLevel();
                 stat.restart();

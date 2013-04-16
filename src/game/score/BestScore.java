@@ -114,7 +114,7 @@ public class BestScore implements Iterable<Score> {
         int i = 1;
         selectFromDB();
         for (Score sc : bestScore) {
-            f.format("%d. %s         %d secs            %d            %d            %d\n", i, sc.getName(), sc.getPlayingTime(),sc.getEnemiesKilled(), sc.getWallsDestroyed(), sc.getItemsUsed());
+            f.format("%d. %s         %d secs            %d            %d            %d\n", i, sc.getName(), sc.PlayingTime(),sc.getEnemiesKilled(), sc.getWallsDestroyed(), sc.getItemsUsed());
             i++;
         }
         return f.toString();

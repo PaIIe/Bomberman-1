@@ -69,6 +69,10 @@ public class Score implements Comparable<Score> {
     public int getPlayingTime() {
         return (int) (System.currentTimeMillis() - startTime) / 1000;
     }
+    
+    public int PlayingTime() {
+        return playingTime;
+    }
 
     /**
      * @return the enemiesKilled

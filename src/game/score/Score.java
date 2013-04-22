@@ -14,7 +14,7 @@ import game.actor.Player;
 public class Score implements Comparable<Score> {
 
     private Level level = Level.getLevel();
-    private static final Score instance = new Score();
+    private static Score instance = new Score();
     private Player hrac;
     private int enemiesKilled;
     private int wallsDestroyed;
@@ -30,6 +30,10 @@ public class Score implements Comparable<Score> {
         itemsUsed = 0;
         startTime = System.currentTimeMillis();
         name = System.getProperty("user.name");
+    }
+    
+    public static void reloadScore(){
+        instance = new Score();
     }
 
     public void loadData(String name, int time, int enemies, int walls, int items) {
@@ -101,14 +105,14 @@ public class Score implements Comparable<Score> {
 
     @Override
     public int compareTo(Score o) {
-        if (o.getPlayingTime() > o.getPlayingTime()) {
+        if (o.PlayingTime() > this.PlayingTime()) {
             return 1;
-        } else if (o.getPlayingTime() < o.getPlayingTime()) {
+        } else if (o.PlayingTime() < this.PlayingTime()) {
             return -1;
         } else {
-            if (o.getEnemiesKilled() > o.getEnemiesKilled()) {
+            if (o.getEnemiesKilled() > this.getEnemiesKilled()) {
                 return -1;
-            } else if (o.getEnemiesKilled() < o.getEnemiesKilled()) {
+            } else if (o.getEnemiesKilled() < this.getEnemiesKilled()) {
                 return 1;
             } else {
                 return 0;

@@ -57,7 +57,8 @@ public class Game extends BasicGame {
     @Override
     public void init(GameContainer gc) throws SlickException {
         level = Level.getLevel();
-        level.loadLevel(levelName + levelNumber);
+    //    level.loadLevel(levelName + levelNumber);
+        level.loadLevel(levelName + level.getLevelNumber());
         hrac = level.getPlayer();
         TrueTypeFont font = new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 14), true);
         text = new TextField(gc, font, 60, 200, 500, 25);
@@ -97,8 +98,12 @@ public class Game extends BasicGame {
             hrac.setStopTime(true);
             if (input.isKeyPressed(Input.KEY_ENTER)) {
                 hrac.setStopTime(false);
-                levelNumber++;
-                if(levelNumber==5){
+                level.setLevelNumber(level.getLevelNumber()+1);
+            //    levelNumber++;
+            //    if(levelNumber==5){
+            //        System.exit(0);                  
+            //    }
+                if(level.getLevelNumber()==5){
                     System.exit(0);                  
                 }
                 level.reloadLevel();
@@ -125,7 +130,7 @@ public class Game extends BasicGame {
             o.getAnimation().draw(o.getX(), o.getY());
         }
         level.showWalls();
-        if(levelNumber==4){
+        if(level.getLevelNumber()==4){
          grphcs.setColor(Color.green);
             grphcs.drawString("Game completed", 250, 200);
         }
@@ -133,7 +138,7 @@ public class Game extends BasicGame {
         
         if (level.getGameState() == GameState.FINISHED && levelNumber<4) {
             grphcs.setColor(Color.green);
-            grphcs.drawString("Level " + levelNumber + " completed", 240, 8);
+            grphcs.drawString("Level " + level.getLevelNumber() + " completed", 240, 8);
             grphcs.setColor(Color.white);
             text.render(gc, grphcs);
         }

@@ -18,7 +18,14 @@ public class WallInFire extends Actors{
     Level level = Level.getLevel();
     
     public WallInFire() throws SlickException{
-        animation = new Animation(Anim.getAnimation("resources/map/wallf", 5),180);
+        switch(level.getLevelNumber()){
+            case 1: animation = new Animation(Anim.getAnimation("resources/map/wallf", 5),180);
+                break;
+            case 2: animation = new Animation(Anim.getAnimation("resources/map/wallbf", 5),180);
+                break;
+            default: animation = new Animation(Anim.getAnimation("resources/map/wallf", 5),180);
+                
+        }
         time=50;
     }
     

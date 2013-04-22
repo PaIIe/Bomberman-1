@@ -7,7 +7,6 @@ package game.actor;
 import game.Level;
 import game.MapObjects;
 import game.score.Score;
-import game.item.Items;
 import java.awt.geom.Rectangle2D;
 import org.newdawn.slick.Animation;
 

@@ -47,6 +47,13 @@ public class Bombs extends Actors {
             this.intersectWithPlayer = false;
         }
         if (steps > 0) {
+            for (int x = 0; x < level.getListOfObjects().toArray().length; x++) {
+                MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
+                if (o instanceof Enemies && o.intersects(this)) {
+                    steps=0;
+                    setExplodeTime(0);
+                }
+            }
             switch (direction) {
                 case EAST:
                     this.x += STEP;
@@ -69,10 +76,11 @@ public class Bombs extends Actors {
             if (explodeTime == 0) {
                 animation = explodingBomb;
                 exploded = true;
-                explodeTime = 50;
+                setExplodeTime(50);
                 try {
                     createFlames();
                 } catch (SlickException ex) {
+                    ex.printStackTrace();
                 }
             } else {
                 explodeTime--;
@@ -216,5 +224,12 @@ public class Bombs extends Actors {
     public void makeMove(Direction direction, int steps) {
         this.direction = direction;
         this.steps = steps;
+    }
+
+    /**
+     * @param explodeTime the explodeTime to set
+     */
+    public void setExplodeTime(int explodeTime) {
+        this.explodeTime = explodeTime;
     }
 }

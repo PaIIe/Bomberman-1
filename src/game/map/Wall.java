@@ -5,6 +5,7 @@
 package game.map;
 
 import game.Anim;
+import game.Level;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.SlickException;
 
@@ -13,9 +14,15 @@ import org.newdawn.slick.SlickException;
  * @author Michal
  */
 public class Wall extends Walls {
- 
+    Level level = Level.getLevel();
     public Wall() throws SlickException{
-        animation = new Animation(Anim.getAnimation("resources/map/wall", 1),200);
+        switch(level.getLevelNumber()){
+            case 1: animation = new Animation(Anim.getAnimation("resources/map/wall", 1),200);
+                break;
+            case 2: animation = new Animation(Anim.getAnimation("resources/map/wallb", 1),200);
+                break;
+            default: animation = new Animation(Anim.getAnimation("resources/map/wall", 1),200);
+        }
     }
     
 }

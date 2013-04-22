@@ -25,10 +25,12 @@ public class Level {
     private Map mapa = new Map(this);
     private GameState gameState;
     private BestScore bestScore;
+    private int levelNumber;
 
     private Level() {
         listOfObjects = new ArrayList<MapObjects>();
         bestScore = new BestScore();
+        levelNumber = 1;
     }
 
     public static Level getLevel() {
@@ -42,13 +44,6 @@ public class Level {
 
     public void show() {
         mapa.getTiledMap().render(0, 0);
-        /*    for(int y=0; y < mapa.getMap().getHeight(); y++){
-         for(int x=0; y < mapa.getMap().getWidth(); x++){
-         if(mapa.getWalls()[x][y] instanceof Wall){
-         mapa.getWalls()[x][y].getAnimation().draw(mapa.getWalls()[x][y].getX(),mapa.getWalls()[x][y].getY());
-         }
-         }
-         } */
     }
 
     public void showWalls() {
@@ -106,6 +101,20 @@ public class Level {
      */
     public BestScore getBestScore() {
         return bestScore;
+    }
+
+    /**
+     * @return the levelNumber
+     */
+    public int getLevelNumber() {
+        return levelNumber;
+    }
+
+    /**
+     * @param levelNumber the levelNumber to set
+     */
+    public void setLevelNumber(int levelNumber) {
+        this.levelNumber = levelNumber;
     }
 
 }

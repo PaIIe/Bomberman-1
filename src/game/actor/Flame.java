@@ -38,6 +38,10 @@ public class Flame extends Actors{
     public void act() {
          for (int x = 0; x < level.getListOfObjects().toArray().length; x++) {
             MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
+            if(o.intersects(this) && o instanceof Bombs){
+                ((Bombs)o).setExplodeTime(0);
+            }
+            
             if(o.intersects(this) && o instanceof Items && ((Items)o).isVisible() && !(o instanceof Portal)){
                 level.removeFromLevel(o);
             }

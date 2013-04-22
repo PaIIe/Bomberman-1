@@ -50,7 +50,7 @@
   <object type="speed" x="544" y="288" width="32" height="32"/>
   <object type="kick" x="224" y="352" width="32" height="32"/>
  </objectgroup>
- <objectgroup name="Walls" width="20" height="15" visible="0">
+ <objectgroup name="Walls" width="20" height="15">
   <object type="wall" x="32" y="64" width="32" height="32"/>
   <object type="wall" x="32" y="96" width="32" height="32"/>
   <object type="wall" x="64" y="96" width="32" height="32"/>

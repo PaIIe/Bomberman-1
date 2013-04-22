@@ -94,6 +94,7 @@ public class BestScore implements Iterable<Score> {
             Score score= Score.getScore();
             score.loadData(rs.getString(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getInt(5));
             bestScore.add(score);
+            Score.reloadScore();
         }
         stm.close();
         connection.close();
@@ -113,8 +114,9 @@ public class BestScore implements Iterable<Score> {
         Formatter f = new Formatter();
         int i = 1;
         selectFromDB();
+        Collections.sort(bestScore);
         for (Score sc : bestScore) {
-            f.format("%d. %s         %d secs            %d            %d            %d\n", i, sc.getName(), sc.PlayingTime(),sc.getEnemiesKilled(), sc.getWallsDestroyed(), sc.getItemsUsed());
+            f.format("%d. %s      %3d secs          %2d            %2d            %2d\n", i, sc.getName(), sc.PlayingTime(),sc.getEnemiesKilled(), sc.getWallsDestroyed(), sc.getItemsUsed());
             i++;
         }
         return f.toString();

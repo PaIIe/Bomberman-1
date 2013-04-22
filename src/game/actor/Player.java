@@ -47,6 +47,7 @@ public class Player extends Actors {
     private boolean puttingBomb = false;
     private int puttingTime = 0;
     private boolean stopTime;
+    private boolean ghostMode;
     private Level level = Level.getLevel();
     private Score stat = Score.getScore();
     private Input input = new Input(480);
@@ -69,16 +70,25 @@ public class Player extends Actors {
         super.animation = this.downAnimation;
         direction = Direction.SOUTH;
         super.animation.stop();
-        bombsCount = 1;
+        bombsCount = 5;
         range = 1;
         speed = 1;
         speedTime = 0;
         kickTime = 0;
         stopTime = false;
+        ghostMode = false;
     }
 
     @Override
     public void act() {
+        if(input.isKeyDown(Input.KEY_G)){
+            if(!ghostMode){
+                ghostMode=true;
+            }
+            else{
+                ghostMode=false;
+            }
+        }
         if (puttingTime > 0) {
             puttingTime--;
             if (puttingTime == 0) {
@@ -227,7 +237,9 @@ public class Player extends Actors {
         }
 
         if (this.intersectWithWall()) {
+            if(!ghostMode){
             this.setPosition(hracX, hracY);
+            }
         }
     }
 

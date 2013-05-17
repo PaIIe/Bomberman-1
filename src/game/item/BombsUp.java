@@ -14,6 +14,10 @@ import org.newdawn.slick.SlickException;
  */
 public class BombsUp extends Items{
     
+    /**
+     * sets animation
+     * @throws SlickException
+     */
     public BombsUp() throws SlickException{
         animation = new Animation(Anim.getAnimation("resources/items/bomb", 1), 20);
     }

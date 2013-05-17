@@ -8,12 +8,13 @@ import bomberman.Game.GameState;
 import game.Anim;
 import game.Level;
 import game.MapObjects;
-import game.score.Score;
+import game.actor.enemies.Enemies;
 import game.item.BombsUp;
 import game.item.KickUp;
 import game.item.RangeUp;
 import game.item.SpeedUp;
 import game.map.Portal;
+import game.score.Score;
 import org.newdawn.slick.Animation;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
@@ -52,6 +53,10 @@ public class Player extends Actors {
     private Score stat = Score.getScore();
     private Input input = new Input(480);
 
+    /**
+     * sets animations, timers and features on default values
+     * @throws SlickException
+     */
     public Player() throws SlickException {
         leftAnimation = new Animation(Anim.getAnimation("resources/player/Bomberman_w", 3), 250);
         rightAnimation = new Animation(Anim.getAnimation("resources/player/Bomberman_e", 3), 250);
@@ -79,6 +84,11 @@ public class Player extends Actors {
         ghostMode = false;
     }
 
+    /**
+     * checks for pressed G-key (ghost mode - not optimized) |
+     * manages putting bomb - sets animation, creates bomb on specific spot
+     * 
+     */
     @Override
     public void act() {
         if(input.isKeyDown(Input.KEY_G)){
@@ -117,6 +127,9 @@ public class Player extends Actors {
         walk();
     }
 
+    /**
+     * method responsible for putting bomb - sets putting animation, timer for animation
+     */
     public void putBomb() {
         if (input.isKeyDown(Input.KEY_SPACE) && puttingBomb == false) {
             if (bombsCount > 0) {
@@ -145,6 +158,16 @@ public class Player extends Actors {
         }
     }
 
+    /**
+     * provides movement for player |
+     * sets animation based on direction/speed animation as well
+     * checks intersection with other objects in map |
+     * if portal - sets game state on FINISHED, celebrating animation |
+     * if enemy - sets game state on FAILED, dying animation |
+     * if bomb - player kicks it if taken KickUp item, else doesn't move |
+     * if an item - removes it from level, sets specific feature of player based on the item |
+     * if wall - player doesn't move
+     */
     public void walk() {
         int hracX = this.getX();
         int hracY = this.getY();
@@ -243,6 +266,11 @@ public class Player extends Actors {
         }
     }
 
+    /**
+     * checks clear path for bomb's movement when kicked by player - 
+     * checks tiles in current player's direction, sets the number of tiles through which can bomb move 
+     * @param bomb
+     */
     public void kickBomb(Bombs bomb) {
         int r=1;
         switch (direction) {          
@@ -291,25 +319,28 @@ public class Player extends Actors {
     }
 
 /**
- * @return the range
+ * @return the range of player's flames
  */
 public int getRange() {
         return range;
     }
 
+    /**
+     * increments number of bombs which player can hold
+     */
     public void incBomb() {
         bombsCount++;
     }
 
     /**
-     * @return the stopTime
+     * @return indicates if game was paused
      */
     public boolean isStopTime() {
         return stopTime;
     }
 
     /**
-     * @param stopTime the stopTime to set
+     * @param stopTime set if game was paused
      */
     public void setStopTime(boolean stopTime) {
         this.stopTime = stopTime;

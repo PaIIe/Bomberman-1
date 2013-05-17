@@ -17,10 +17,19 @@ import org.newdawn.slick.SlickException;
  */
 public class Portal extends Items {
     
+    /**
+     * sets animation
+     * @throws SlickException
+     */
     public Portal() throws SlickException{
         animation = new Animation(Anim.getAnimation("resources/map/portal", 1),180);
     }
     
+    /**
+     * overrides intersect method, specified for this concrete class
+     * @param actor
+     * @return
+     */
     @Override
     public boolean intersects(MapObjects actor) {    
         Rectangle2D predmet = new Rectangle2D.Float(actor.getX()+6, actor.getY()+6, 20, 20);

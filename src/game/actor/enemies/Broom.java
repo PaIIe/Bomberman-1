@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.actor;
+package game.actor.enemies;
 
 import game.Anim;
 import java.util.Random;
@@ -14,12 +14,14 @@ import org.newdawn.slick.SlickException;
  * @author Michal
  */
 public class Broom extends Enemies {
-    private int oldX;
-    private int oldY;
     private int randomSteps;
     private int randomDirection;
     private final static int SPEED = 2;
 
+    /**
+     * sets animations, direction and number of steps on start value
+     * @throws SlickException
+     */
     public Broom() throws SlickException {
         leftAnimation = new Animation(Anim.getAnimation("resources/actors/broom", 1), 250);
         rightAnimation = new Animation(Anim.getAnimation("resources/actors/broom", 1), 250);
@@ -29,12 +31,19 @@ public class Broom extends Enemies {
         randomSteps = 0;
     }
 
+    /**
+     * provides default enemy behaviour and walking
+     */
     @Override
     public void act() {
         walk();
         super.act();
     }
 
+    /**
+     * moves in randomly generated direction for randomly generated number of steps |
+     * double speed
+     */
     public void walk() {
         oldX = this.getX();
         oldY = this.getY();
@@ -65,12 +74,18 @@ public class Broom extends Enemies {
 
     }
 
+    /**
+     * generates direction and number of steps
+     */
     public void generateMovement() {
         Random r = new Random();
         randomDirection = r.nextInt(4) * 90;
         randomSteps = r.nextInt(50) + 3;
     }
 
+    /**
+     * sets number of steps on 0, stops current enemy on old position
+     */
     @Override
     public void changeDirection() {    
         this.setPosition(oldX, oldY);

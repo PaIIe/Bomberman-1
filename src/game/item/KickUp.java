@@ -14,6 +14,10 @@ import org.newdawn.slick.SlickException;
  */
 public class KickUp extends Items {
     
+    /**
+     * sets animation
+     * @throws SlickException
+     */
     public KickUp() throws SlickException{
         animation = new Animation(Anim.getAnimation("resources/items/kick", 1),20);
     }

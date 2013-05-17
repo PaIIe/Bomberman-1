@@ -10,6 +10,9 @@ package game.map;
  */
 public class Block extends Walls {
     
+    /**
+     * class for not-destroyable walls
+     */
     public Block(){
         
     }

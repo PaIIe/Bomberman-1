@@ -15,14 +15,27 @@ public abstract class Items extends MapObjects {
     
     private boolean visible = false;
     
+    /**
+     * indicates if item is hidden behind wall
+     * @return false - if hidden, true -  if not hidden
+     */
     public boolean isVisible(){
         return visible;
     }
     
+    /**
+     * sets visibility
+     * @param visible
+     */
     public void setVisible(boolean visible){
         this.visible = visible;
     }
     
+    /**
+     * overrides intersect method, specified for this concrete class
+     * @param actor
+     * @return
+     */
     @Override
     public boolean intersects(MapObjects actor) {    
         Rectangle2D predmet = new Rectangle2D.Float(actor.getX()+6, actor.getY()+6, 18, 18);

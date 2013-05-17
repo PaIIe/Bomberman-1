@@ -17,12 +17,14 @@ public class Score extends javax.swing.JDialog {
     
     /**
      * Creates new form Score
+     * @param parent 
+     * @param modal 
      */
     public Score(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-        int x = (int) ((dimension.getWidth() / 2) - 130);
-        int y = (int) ((dimension.getHeight() / 2) - 160);
+        int x = (int) ((dimension.getWidth() / 2) - 110);
+        int y = (int) ((dimension.getHeight() / 2) - 140);
         this.setLocation(x, y);
         initComponents();
         jTextField1.setText("     Name  |        Time       |    EK    |    WD    |    IU   ");
@@ -48,7 +50,10 @@ public class Score extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setAutoRequestFocus(false);
+        setModal(true);
+        setResizable(false);
+        setType(java.awt.Window.Type.UTILITY);
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -108,6 +113,8 @@ public class Score extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        getAccessibleContext().setAccessibleParent(null);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -117,7 +124,6 @@ public class Score extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
-     * @param args the command line arguments
      */
     public Score() {
         /* Set the Nimbus look and feel */

@@ -110,11 +110,11 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        this.setVisible(false);
-        this.dispose();
+       System.exit(0);
     }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+
         Score score = new Score();
     }//GEN-LAST:event_jButton2MouseClicked
 

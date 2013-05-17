@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ *
+ * @author Michal
+ */
 public class BestScore implements Iterable<Score> {
 
     /**
@@ -40,6 +44,7 @@ public class BestScore implements Iterable<Score> {
 
     /**
      * Adds player time to best score.
+     * @param score 
      */
     public void addScore(Score score) {
         bestScore.add(score);

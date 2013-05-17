@@ -14,6 +14,10 @@ import org.newdawn.slick.SlickException;
  */
 public class SpeedUp extends Items{
     
+    /**
+     * sets animation
+     * @throws SlickException
+     */
     public SpeedUp() throws SlickException{
         animation = new Animation(Anim.getAnimation("resources/items/speed", 1),20);
     }

@@ -4,7 +4,6 @@
  */
 package bomberman;
 
-import javax.swing.JFrame;
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.SlickException;
 
@@ -15,7 +14,8 @@ import org.newdawn.slick.SlickException;
 public class NewGame {
      
     /**
-     * @param args the command line arguments
+     * runs the windows application
+     * @throws SlickException  
      */
     public NewGame() throws SlickException{
         AppGameContainer app;

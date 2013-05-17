@@ -14,6 +14,10 @@ import org.newdawn.slick.SlickException;
  */
 public class RangeUp extends Items{
     
+    /**
+     * sets animation
+     * @throws SlickException
+     */
     public RangeUp() throws SlickException{
         animation = new Animation(Anim.getAnimation("resources/items/range", 1),20);
     }

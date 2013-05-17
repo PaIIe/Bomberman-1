@@ -7,6 +7,7 @@ package game.actor;
 import game.Anim;
 import game.Level;
 import game.MapObjects;
+import game.actor.enemies.Enemies;
 import game.item.Items;
 import game.map.Wall;
 import game.map.Walls;
@@ -31,9 +32,14 @@ public class Bombs extends Actors {
     private int steps;
     private Direction direction;
 
+    /**
+     * sets animations, basic exploding time, 
+     * intersectWithPlayer - possibility for player to intersect before leaving place of putting bomb
+     * @throws SlickException
+     */
     public Bombs() throws SlickException {
         animation = new Animation(Anim.getAnimation("resources/actors/bomb", 2), 200);
-        explodingBomb = new Animation(Anim.getAnimation("resources/actors/expbomb", 1), 20);
+        explodingBomb = new Animation(Anim.getAnimation("resources/actors/expbomb", 1), 250);
         explodeTime = 200;
         exploded = false;
         intersectWithPlayer = true;
@@ -41,6 +47,13 @@ public class Bombs extends Actors {
 
     }
 
+    /**
+     * checks intersection with player
+     * moves if kicked by player
+     * explodes after explode time is done
+     * explodes when moving intersect with enemy
+     * creates flames by explosion
+     */
     @Override
     public void act() {
         if (!level.getPlayer().intersects(this)) {
@@ -96,6 +109,10 @@ public class Bombs extends Actors {
         }
     }
 
+    /**
+     * method for creating flames | based on range of player flames checks all the directions for walls
+     * @throws SlickException
+     */
     public void createFlames() throws SlickException {
         int range = level.getPlayer().getRange();
         lookAround(Direction.EAST, range);
@@ -104,6 +121,13 @@ public class Bombs extends Actors {
         lookAround(Direction.SOUTH, range);
     }
 
+    /**
+     * based on player flame range checks the tiles in specified direction for walls |
+     * creates flames if no wall on current tile
+     * @param direction 
+     * @param range
+     * @throws SlickException
+     */
     public void lookAround(Direction direction, int range) throws SlickException {
         int oldX = this.getX();
         int oldY = this.getY();
@@ -171,6 +195,12 @@ public class Bombs extends Actors {
         }
     }
 
+    /**
+     * check for wall on specified coordinates |
+     * if finds wall, destroys it and creates wallInFire on the position 
+     * @param x X-coordinate
+     * @param y Y-coordinate
+     */
     public void checkWall(int x, int y) {
         for (int i = 0; i < level.getMap().getWalls().toArray().length; i++) {
             Walls o = (Walls) level.getMap().getWalls().toArray()[i];
@@ -184,12 +214,18 @@ public class Bombs extends Actors {
                     wall.setPosition(o.getX(), o.getY());
                     level.addToLevel(wall);
                 } catch (SlickException ex) {
-                    System.out.println("SlickException - WallInFire creating fail");
+                    ex.printStackTrace();
                 }
             }
         }
     }
 
+    /**
+     * checks for item behind the wall on specified position |
+     * if finds an item, sets visibility on true - flames can burn it
+     * @param x X-coordinate
+     * @param y Y-coordinate
+     */
     public void checkItem(int x, int y) {
         for (int i = 0; i < level.getListOfObjects().toArray().length; i++) {
             MapObjects o = (MapObjects) level.getListOfObjects().toArray()[i];
@@ -199,6 +235,11 @@ public class Bombs extends Actors {
         }
     }
 
+    /**
+     * overrides intersect method, specified for this concrete class
+     * @param actor
+     * @return
+     */
     @Override
     public boolean intersects(MapObjects actor) {
         Rectangle2D predmet = new Rectangle2D.Float(actor.getX() + 6, actor.getY() + 6, 18, 18);
@@ -207,20 +248,33 @@ public class Bombs extends Actors {
     }
 
     /**
-     * @return the intersectWithPlayer
+     * @return the possibility to intersect with player - while putting bomb and leaving the spot
      */
     public boolean canIntersectWithPlayer() {
         return intersectWithPlayer;
     }
 
+    /**
+     * increments X coordinate by x
+     * @param x
+     */
     public void setX(int x) {
         this.x += x;
     }
 
+    /**
+     * increments Y coordinate by y
+     * @param y
+     */
     public void setY(int y) {
         this.y += y;
     }
 
+    /**
+     * sets direction and number of steps for movement of the current bomb
+     * @param direction
+     * @param steps
+     */
     public void makeMove(Direction direction, int steps) {
         this.direction = direction;
         this.steps = steps;

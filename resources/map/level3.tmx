@@ -13,9 +13,12 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="5" name="tileset3" tilewidth="32" tileheight="32">
+  <image source="../tileset3.png" width="64" height="32"/>
+ </tileset>
  <layer name="Background" width="20" height="15">
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NgoD5gphJGNo8QTYyaUfeNum/UffR3HzUBAKVmT3KwBAAA
+   H4sIAAAAAAAAC2NjoC5gA2JWKmFk8xgI0MSoYUBTTw33EWPnUHUfNvFR9w2f+KWX+6gJAGB9wECwBAAA
   </data>
  </layer>
  <layer name="Blocks" width="20" height="15">
@@ -23,96 +26,38 @@
    <property name="destroyable" value="false"/>
   </properties>
   <data encoding="base64" compression="gzip">
-   H4sIAAAAAAAAC2NiYGBgojKmFkA2jxBNjJpR9426b9R99HcfNTEAURb16rAEAAA=
+   H4sIAAAAAAAAC2NjYGBgozKmFkA2jxBNjJpR9426b9R99HcfNTEAYKjy/LAEAAA=
   </data>
  </layer>
  <objectgroup name="Objects" width="20" height="15">
-  <object type="blob" x="224" y="160" width="32" height="32"/>
-  <object type="blob" x="320" y="352" width="32" height="32"/>
-  <object type="blob" x="512" y="224" width="32" height="32"/>
-  <object type="bomb" x="128" y="160" width="32" height="32"/>
-  <object type="speed" x="32" y="128" width="32" height="32"/>
-  <object type="speed" x="256" y="224" width="32" height="32"/>
-  <object type="range" x="288" y="96" width="32" height="32"/>
-  <object type="bomb" x="192" y="32" width="32" height="32"/>
-  <object type="portal" x="96" y="32" width="32" height="32"/>
-  <object name="player" type="player" x="32" y="32" width="32" height="32">
+  <object type="blob" x="576" y="224" width="32" height="32"/>
+  <object type="blob" x="96" y="352" width="32" height="32"/>
+  <object type="blob" x="416" y="288" width="32" height="32"/>
+  <object type="bomb" x="352" y="96" width="32" height="32"/>
+  <object type="speed" x="320" y="64" width="32" height="32"/>
+  <object type="speed" x="64" y="288" width="32" height="32"/>
+  <object type="range" x="480" y="160" width="32" height="32"/>
+  <object type="bomb" x="128" y="96" width="32" height="32"/>
+  <object type="portal" x="576" y="352" width="32" height="32"/>
+  <object name="player" type="player" x="576" y="416" width="32" height="32">
    <polygon points="0,0 32,0 32,32 0,32 0,0"/>
   </object>
-  <object type="cron" x="96" y="224" width="32" height="32"/>
-  <object type="cron" x="320" y="416" width="32" height="32"/>
-  <object type="cron" x="576" y="96" width="32" height="32"/>
-  <object type="range" x="480" y="32" width="32" height="32"/>
-  <object type="range" x="96" y="384" width="32" height="32"/>
-  <object type="bomb" x="512" y="128" width="32" height="32"/>
-  <object type="bomb" x="160" y="32" width="32" height="32"/>
+  <object type="cron" x="160" y="384" width="32" height="32"/>
+  <object type="cron" x="64" y="96" width="32" height="32"/>
+  <object type="cron" x="576" y="160" width="32" height="32"/>
+  <object type="range" x="320" y="416" width="32" height="32"/>
+  <object type="range" x="512" y="64" width="32" height="32"/>
+  <object type="bomb" x="224" y="288" width="32" height="32"/>
+  <object type="bomb" x="384" y="416" width="32" height="32"/>
+  <object type="kick" x="320" y="160" width="32" height="32"/>
+  <object type="kick" x="480" y="416" width="32" height="32"/>
+  <object type="kick" x="256" y="352" width="32" height="32"/>
+  <object type="fantom" x="416" y="32" width="32" height="32"/>
+  <object type="fantom" x="512" y="32" width="32" height="32"/>
+  <object type="fantom" x="320" y="320" width="32" height="32"/>
+  <object type="fantom" x="32" y="32" width="32" height="32"/>
  </objectgroup>
- <objectgroup name="Walls" width="20" height="15" visible="0">
-  <object type="wall" x="32" y="64" width="32" height="32"/>
-  <object type="wall" x="32" y="96" width="32" height="32"/>
-  <object type="wall" x="64" y="96" width="32" height="32"/>
-  <object type="wall" x="32" y="128" width="32" height="32"/>
-  <object type="wall" x="32" y="160" width="32" height="32"/>
-  <object type="wall" x="64" y="160" width="32" height="32"/>
-  <object type="wall" x="128" y="160" width="32" height="32"/>
-  <object type="wall" x="160" y="160" width="32" height="32"/>
-  <object type="wall" x="160" y="128" width="32" height="32"/>
-  <object type="wall" x="192" y="96" width="32" height="32"/>
-  <object type="wall" x="224" y="96" width="32" height="32"/>
-  <object type="wall" x="256" y="96" width="32" height="32"/>
-  <object type="wall" x="288" y="96" width="32" height="32"/>
-  <object type="wall" x="320" y="96" width="32" height="32"/>
-  <object type="wall" x="224" y="32" width="32" height="32"/>
-  <object type="wall" x="224" y="64" width="32" height="32"/>
-  <object type="wall" x="192" y="32" width="32" height="32"/>
-  <object type="wall" x="320" y="128" width="32" height="32"/>
-  <object type="wall" x="288" y="160" width="32" height="32"/>
-  <object type="wall" x="288" y="192" width="32" height="32"/>
-  <object type="wall" x="288" y="224" width="32" height="32"/>
-  <object type="wall" x="256" y="224" width="32" height="32"/>
-  <object type="wall" x="224" y="224" width="32" height="32"/>
-  <object type="wall" x="288" y="288" width="32" height="32"/>
-  <object type="wall" x="288" y="320" width="32" height="32"/>
-  <object type="wall" x="320" y="288" width="32" height="32"/>
-  <object type="wall" x="288" y="352" width="32" height="32"/>
-  <object type="wall" x="256" y="352" width="32" height="32"/>
-  <object type="wall" x="224" y="352" width="32" height="32"/>
-  <object type="wall" x="192" y="352" width="32" height="32"/>
-  <object type="wall" x="224" y="384" width="32" height="32"/>
-  <object type="wall" x="224" y="416" width="32" height="32"/>
-  <object type="wall" x="256" y="416" width="32" height="32"/>
-  <object type="wall" x="160" y="352" width="32" height="32"/>
-  <object type="wall" x="128" y="352" width="32" height="32"/>
-  <object type="wall" x="128" y="288" width="32" height="32"/>
-  <object type="wall" x="160" y="288" width="32" height="32"/>
-  <object type="wall" x="96" y="288" width="32" height="32"/>
-  <object type="wall" x="96" y="256" width="32" height="32"/>
-  <object type="wall" x="64" y="288" width="32" height="32"/>
-  <object type="wall" x="96" y="352" width="32" height="32"/>
-  <object type="wall" x="96" y="320" width="32" height="32"/>
-  <object type="wall" x="96" y="384" width="32" height="32"/>
-  <object type="wall" x="96" y="416" width="32" height="32"/>
-  <object type="wall" x="384" y="192" width="32" height="32"/>
-  <object type="wall" x="384" y="160" width="32" height="32"/>
-  <object type="wall" x="448" y="32" width="32" height="32"/>
-  <object type="wall" x="480" y="32" width="32" height="32"/>
-  <object type="wall" x="512" y="32" width="32" height="32"/>
-  <object type="wall" x="512" y="64" width="32" height="32"/>
-  <object type="wall" x="512" y="96" width="32" height="32"/>
-  <object type="wall" x="512" y="160" width="32" height="32"/>
-  <object type="wall" x="512" y="128" width="32" height="32"/>
-  <object type="wall" x="480" y="160" width="32" height="32"/>
-  <object type="wall" x="448" y="160" width="32" height="32"/>
-  <object type="wall" x="448" y="192" width="32" height="32"/>
-  <object type="wall" x="448" y="224" width="32" height="32"/>
-  <object type="wall" x="448" y="256" width="32" height="32"/>
-  <object type="wall" x="512" y="288" width="32" height="32"/>
-  <object type="wall" x="544" y="288" width="32" height="32"/>
-  <object type="wall" x="448" y="352" width="32" height="32"/>
-  <object type="wall" x="448" y="416" width="32" height="32"/>
-  <object type="wall" x="448" y="384" width="32" height="32"/>
-  <object type="wall" x="384" y="352" width="32" height="32"/>
-  <object type="wall" x="352" y="352" width="32" height="32"/>
+ <objectgroup name="Walls" width="20" height="15">
   <object type="block" x="64" y="64" width="32" height="32"/>
   <object type="block" x="64" y="128" width="32" height="32"/>
   <object type="block" x="64" y="192" width="32" height="32"/>
@@ -134,7 +79,6 @@
   <object type="block" x="544" y="256" width="32" height="32"/>
   <object type="block" x="544" y="320" width="32" height="32"/>
   <object type="block" x="544" y="384" width="32" height="32"/>
-  <object type="block" x="480" y="384" width="32" height="32"/>
   <object type="block" x="480" y="320" width="32" height="32"/>
   <object type="block" x="480" y="256" width="32" height="32"/>
   <object type="block" x="480" y="192" width="32" height="32"/>
@@ -227,6 +171,70 @@
   <object type="block" x="480" y="448" width="32" height="32"/>
   <object type="block" x="544" y="448" width="32" height="32"/>
   <object type="block" x="576" y="448" width="32" height="32"/>
+  <object type="wall" x="512" y="64" width="32" height="32"/>
+  <object type="wall" x="512" y="96" width="32" height="32"/>
+  <object type="wall" x="480" y="96" width="32" height="32"/>
+  <object type="wall" x="544" y="96" width="32" height="32"/>
+  <object type="wall" x="576" y="96" width="32" height="32"/>
+  <object type="wall" x="576" y="288" width="32" height="32"/>
+  <object type="wall" x="512" y="224" width="32" height="32"/>
+  <object type="wall" x="512" y="160" width="32" height="32"/>
+  <object type="wall" x="480" y="160" width="32" height="32"/>
+  <object type="wall" x="480" y="288" width="32" height="32"/>
+  <object type="wall" x="416" y="416" width="32" height="32"/>
+  <object type="wall" x="480" y="416" width="32" height="32"/>
+  <object type="wall" x="384" y="416" width="32" height="32"/>
+  <object type="wall" x="352" y="416" width="32" height="32"/>
+  <object type="wall" x="192" y="416" width="32" height="32"/>
+  <object type="wall" x="192" y="352" width="32" height="32"/>
+  <object type="wall" x="160" y="288" width="32" height="32"/>
+  <object type="wall" x="96" y="320" width="32" height="32"/>
+  <object type="wall" x="32" y="416" width="32" height="32"/>
+  <object type="wall" x="32" y="384" width="32" height="32"/>
+  <object type="wall" x="32" y="352" width="32" height="32"/>
+  <object type="wall" x="64" y="352" width="32" height="32"/>
+  <object type="wall" x="32" y="320" width="32" height="32"/>
+  <object type="wall" x="32" y="288" width="32" height="32"/>
+  <object type="wall" x="64" y="288" width="32" height="32"/>
+  <object type="wall" x="96" y="288" width="32" height="32"/>
+  <object type="wall" x="224" y="288" width="32" height="32"/>
+  <object type="wall" x="128" y="96" width="32" height="32"/>
+  <object type="wall" x="96" y="96" width="32" height="32"/>
+  <object type="wall" x="96" y="64" width="32" height="32"/>
+  <object type="wall" x="128" y="32" width="32" height="32"/>
+  <object type="wall" x="32" y="192" width="32" height="32"/>
   <object type="wall" x="96" y="160" width="32" height="32"/>
+  <object type="wall" x="96" y="128" width="32" height="32"/>
+  <object type="wall" x="192" y="160" width="32" height="32"/>
+  <object type="wall" x="128" y="288" width="32" height="32"/>
+  <object type="wall" x="576" y="320" width="32" height="32"/>
+  <object type="wall" x="576" y="352" width="32" height="32"/>
+  <object type="wall" x="512" y="352" width="32" height="32"/>
+  <object type="wall" x="320" y="64" width="32" height="32"/>
+  <object type="wall" x="320" y="32" width="32" height="32"/>
+  <object type="wall" x="288" y="32" width="32" height="32"/>
+  <object type="wall" x="256" y="32" width="32" height="32"/>
+  <object type="wall" x="320" y="96" width="32" height="32"/>
+  <object type="wall" x="352" y="96" width="32" height="32"/>
+  <object type="wall" x="320" y="160" width="32" height="32"/>
+  <object type="wall" x="320" y="128" width="32" height="32"/>
+  <object type="wall" x="288" y="128" width="32" height="32"/>
+  <object type="wall" x="224" y="160" width="32" height="32"/>
+  <object type="wall" x="224" y="192" width="32" height="32"/>
+  <object type="wall" x="160" y="160" width="32" height="32"/>
+  <object type="wall" x="320" y="256" width="32" height="32"/>
+  <object type="wall" x="384" y="256" width="32" height="32"/>
+  <object type="wall" x="384" y="288" width="32" height="32"/>
+  <object type="wall" x="352" y="288" width="32" height="32"/>
+  <object type="wall" x="384" y="352" width="32" height="32"/>
+  <object type="wall" x="352" y="352" width="32" height="32"/>
+  <object type="wall" x="384" y="384" width="32" height="32"/>
+  <object type="wall" x="320" y="416" width="32" height="32"/>
+  <object type="wall" x="256" y="352" width="32" height="32"/>
+  <object type="wall" x="224" y="352" width="32" height="32"/>
+  <object type="wall" x="224" y="384" width="32" height="32"/>
+  <object type="wall" x="448" y="256" width="32" height="32"/>
+  <object type="wall" x="448" y="96" width="32" height="32"/>
+  <object type="block" x="480" y="384" width="32" height="32"/>
  </objectgroup>
 </map>

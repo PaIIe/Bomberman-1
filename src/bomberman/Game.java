@@ -4,13 +4,13 @@
  */
 package bomberman;
 
-import game.score.BestScore;
 import game.Level;
 import game.MapObjects;
-import game.score.Score;
 import game.actor.Actors;
 import game.actor.Player;
-import javax.swing.JFrame;
+import game.actor.enemies.Dragon;
+import game.score.BestScore;
+import game.score.Score;
 import org.newdawn.slick.BasicGame;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -26,43 +26,53 @@ import org.newdawn.slick.gui.TextField;
  */
 public class Game extends BasicGame {
 
+    /**
+     *  enumerated type for game states
+     */
     public static enum GameState {
 
+        /**
+         *
+         */
         PLAYING,
+        /**
+         *
+         */
         PAUSED,
+        /**
+         *
+         */
         FAILED,
+        /**
+         *
+         */
         FINISHED
     }
     private Player hrac;
     private TextField text;
-    private TextField text2;
-    private TextField text3;
     private Level level;
     private int playingTime;
     private Score stat;
-    private BestScore bestScore=new BestScore();
+    private BestScore bestScore = new BestScore();
     private final String levelName = "level";
-    private int levelNumber;
     private int dyingTime;
-    private JFrame jFrame;
 
+    /**
+     *  constructor for main slick game class
+     */
     public Game() {
         super("Bomberman");
         stat = Score.getScore();
-        levelNumber = 1;
         dyingTime = 150;
-        this.jFrame = jFrame;
     }
 
     @Override
     public void init(GameContainer gc) throws SlickException {
         level = Level.getLevel();
-    //    level.loadLevel(levelName + levelNumber);
         level.loadLevel(levelName + level.getLevelNumber());
         hrac = level.getPlayer();
         TrueTypeFont font = new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 14), true);
         text = new TextField(gc, font, 60, 200, 500, 25);
-        text2 = new TextField(gc, font, 210, 300, 210, 30);
 
     }
 
@@ -88,7 +98,7 @@ public class Game extends BasicGame {
         }
 
         if (level.getGameState() == GameState.FINISHED) {
-            if (!hrac.isStopTime() && levelNumber<5) {
+            if (!hrac.isStopTime() && level.getLevelNumber() < 5) {
                 playingTime = stat.getPlayingTime();
                 bestScore.addScore(stat);
                 int minutes = playingTime / 60;
@@ -98,13 +108,9 @@ public class Game extends BasicGame {
             hrac.setStopTime(true);
             if (input.isKeyPressed(Input.KEY_ENTER)) {
                 hrac.setStopTime(false);
-                level.setLevelNumber(level.getLevelNumber()+1);
-            //    levelNumber++;
-            //    if(levelNumber==5){
-            //        System.exit(0);                  
-            //    }
-                if(level.getLevelNumber()==5){
-                    System.exit(0);                  
+                level.incLevel();
+                if (level.getLevelNumber() == 5) {
+                    System.exit(0);
                 }
                 level.reloadLevel();
                 stat.restart();
@@ -127,16 +133,22 @@ public class Game extends BasicGame {
     public void render(GameContainer gc, Graphics grphcs) throws SlickException {
         level.show();
         for (MapObjects o : level.getListOfObjects()) {
-            o.getAnimation().draw(o.getX(), o.getY());
+            if (o instanceof Dragon) {
+                for (Dragon d : Dragon.getBody()) {
+                    d.getAnimation().draw(d.getX(), d.getY());
+                }
+            } else {
+                o.getAnimation().draw(o.getX(), o.getY());
+            }
         }
         level.showWalls();
-        if(level.getLevelNumber()==4){
-         grphcs.setColor(Color.green);
-            grphcs.drawString("Game completed", 250, 200);
+        if (level.getLevelNumber() == 4) {
+            grphcs.setColor(Color.green);
+            grphcs.drawString("Final level", 270, 200);
         }
-            
-        
-        if (level.getGameState() == GameState.FINISHED && levelNumber<4) {
+
+
+        if (level.getGameState() == GameState.FINISHED && level.getLevelNumber() < 4) {
             grphcs.setColor(Color.green);
             grphcs.drawString("Level " + level.getLevelNumber() + " completed", 240, 8);
             grphcs.setColor(Color.white);

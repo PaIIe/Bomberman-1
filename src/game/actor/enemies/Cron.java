@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package game.actor;
+package game.actor.enemies;
 
 import game.Anim;
 import game.actor.AI.Stalker;
@@ -18,31 +18,41 @@ import org.newdawn.slick.util.pathfinding.Path;
  */
 public class Cron extends Enemies implements Mover {
 
-    private int oldX;
-    private int oldY;
     private int randomSteps;
     private int generatedDirection;
     private Stalker stalker;
     private Path path;
     private int stepSize;
 
+    /**
+     * sets animations, direction and number of steps on start value | 
+     * gets instance of path-finding class
+     * @throws SlickException
+     */
     public Cron() throws SlickException {
         leftAnimation = new Animation(Anim.getAnimation("resources/actors/cron_w", 1), 250);
         rightAnimation = new Animation(Anim.getAnimation("resources/actors/cron_e", 1), 250);
         super.animation = this.leftAnimation;
-        this.animation.start();
         direction = Direction.WEST;
         randomSteps = 0;
         stalker = new Stalker();
         stepSize = 32;
     }
 
+    /**
+     * provides default enemy behaviour and walking
+     */
     @Override
     public void act() {
         walk();
         super.act();
     }
 
+    /**
+     * checks if exists path to player |
+     * moves in the specified direction
+     * 
+     */
     public void walk() {
         oldX = this.getX();
         oldY = this.getY();
@@ -78,6 +88,10 @@ public class Cron extends Enemies implements Mover {
         randomSteps--;
     }
 
+    /**
+     * randomly generates direction and checks if the tile in the direction is clear(not wall)
+     * sets steps on 32 - 32 pixels of 1 tile, 1 step = 1 pixel
+     */
     public void move() {
         if (randomSteps == 0) {
             Random r = new Random();
@@ -110,6 +124,12 @@ public class Cron extends Enemies implements Mover {
         }
     }
 
+    /**
+     * checks if exists clear path to player |
+     * if exists, sets direction to the first tile of the acquired path |
+     * else moves randomly |
+     * moves tile after tile - 32 steps in 1 direction
+     */
     public void stalk() {
         if (randomSteps == 0) {
             path = stalker.getPath(this, this.getX() / 32, this.getY() / 32, (level.getPlayer().getX() + 10) / 32, (level.getPlayer().getY() + 10) / 32);
@@ -133,6 +153,9 @@ public class Cron extends Enemies implements Mover {
         }
     }
 
+    /**
+     * * sets number of steps on 0, stops current enemy on old position
+     */
     @Override
     public void changeDirection() {
         this.setPosition(oldX, oldY);

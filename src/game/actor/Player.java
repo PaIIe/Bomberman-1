@@ -75,7 +75,7 @@ public class Player extends Actors {
         super.animation = this.downAnimation;
         direction = Direction.SOUTH;
         super.animation.stop();
-        bombsCount = 5;
+        bombsCount = 1;
         range = 1;
         speed = 1;
         speedTime = 0;

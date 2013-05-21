@@ -4,9 +4,6 @@
  */
 package game.score;
 
-import game.Level;
-import game.actor.Player;
-
 /**
  *
  * @author Michal

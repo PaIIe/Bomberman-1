@@ -50,6 +50,7 @@ public class Game extends BasicGame {
     }
     private Player hrac;
     private TextField text;
+    private TextField text2;
     private Level level;
     private int playingTime;
     private Score stat;
@@ -73,6 +74,7 @@ public class Game extends BasicGame {
         hrac = level.getPlayer();
         TrueTypeFont font = new TrueTypeFont(new java.awt.Font("Verdana", java.awt.Font.PLAIN, 14), true);
         text = new TextField(gc, font, 60, 200, 500, 25);
+        text2 = new TextField(gc, font, 270, 230, 110, 25);
 
     }
 
@@ -104,6 +106,7 @@ public class Game extends BasicGame {
                 int minutes = playingTime / 60;
                 int seconds = playingTime % 60;
                 text.setText("  Playing time: " + minutes + " min " + seconds + "secs" + "   Enemies killed: " + stat.getEnemiesKilled() + "   Walls Destroyed: " + stat.getWallsDestroyed());
+                text2.setText("  Press Enter");
             }
             hrac.setStopTime(true);
             if (input.isKeyPressed(Input.KEY_ENTER)) {
@@ -153,6 +156,7 @@ public class Game extends BasicGame {
             grphcs.drawString("Level " + level.getLevelNumber() + " completed", 240, 8);
             grphcs.setColor(Color.white);
             text.render(gc, grphcs);
+            text2.render(gc, grphcs);
         }
         if (level.getGameState() == GameState.FAILED) {
             grphcs.setColor(Color.red);

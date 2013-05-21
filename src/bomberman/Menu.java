@@ -26,7 +26,6 @@ public class Menu extends javax.swing.JFrame {
         int x = (int) ((dimension.getWidth() / 2) - 160);
         int y = (int) ((dimension.getHeight() / 2) - 160);
         this.setLocation(x, y);
-        //   this.setLocationRelativeTo(null);
         this.pack();
         this.setVisible(true);
         initComponents();

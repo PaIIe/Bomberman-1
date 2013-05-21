@@ -69,8 +69,8 @@ public class Flame extends Actors {
         if (dragonTimer>0){
             dragonTimer--;
         }
-        for (int x = 0; x < level.getListOfObjects().toArray().length; x++) {
-            MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
+        for (int j = 0; j < level.getListOfObjects().toArray().length; j++) {
+            MapObjects o = (MapObjects) level.getListOfObjects().toArray()[j];
             if (o.intersects(this) && o instanceof Bombs) {
                 ((Bombs) o).setExplodeTime(0);
             }

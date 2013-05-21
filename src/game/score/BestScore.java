@@ -29,7 +29,7 @@ import java.util.logging.Logger;
 public class BestScore implements Iterable<Score> {
 
     /**
-     * List of best player times.
+     * List of best player scores.
      */
     private List<Score> bestScore = new ArrayList<Score>();
 
@@ -43,7 +43,7 @@ public class BestScore implements Iterable<Score> {
     }
 
     /**
-     * Adds player time to best score.
+     * Adds player time and other statistics to best score.
      * @param score 
      */
     public void addScore(Score score) {
@@ -115,11 +115,11 @@ public class BestScore implements Iterable<Score> {
      *
      * @return a string representation of the object
      */
+    @Override
     public String toString() {
         Formatter f = new Formatter();
         int i = 1;
         selectFromDB();
-        Collections.sort(bestScore);
         for (Score sc : bestScore) {
             f.format("%d. %s      %3d secs          %2d            %2d            %2d\n", i, sc.getName(), sc.PlayingTime(),sc.getEnemiesKilled(), sc.getWallsDestroyed(), sc.getItemsUsed());
             i++;

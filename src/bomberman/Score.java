@@ -152,11 +152,11 @@ public class Score extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                Score dialog = new Score(new javax.swing.JFrame(), true);
+                final Score dialog = new Score(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
+                      dialog.dispose();
                     }
                 });
                 dialog.setVisible(true);

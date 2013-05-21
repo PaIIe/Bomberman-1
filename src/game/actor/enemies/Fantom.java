@@ -104,6 +104,7 @@ public class Fantom extends Enemies {
     /**
      * sets number of steps on 0, stops current enemy on old position
      */
+    @Override
     public void changeDirection() {
         this.setPosition(oldX, oldY);
         steps = 0;

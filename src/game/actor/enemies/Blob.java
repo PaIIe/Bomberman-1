@@ -14,11 +14,13 @@ import org.newdawn.slick.SlickException;
  * @author Michal
  */
 public class Blob extends Enemies {
-    private int randomSteps;
+    //   private int randomSteps;
+
     private int randomDirection;
 
     /**
      * sets animations, direction and number of steps on start value
+     *
      * @throws SlickException
      */
     public Blob() throws SlickException {
@@ -27,7 +29,7 @@ public class Blob extends Enemies {
         super.animation = this.leftAnimation;
         this.animation.start();
         direction = Direction.WEST;
-        randomSteps = 0;
+        steps = 0;
     }
 
     /**
@@ -40,12 +42,13 @@ public class Blob extends Enemies {
     }
 
     /**
-     * moves in randomly generated direction for randomly generated number of steps
+     * moves in randomly generated direction for randomly generated number of
+     * steps
      */
     public void walk() {
         oldX = this.getX();
         oldY = this.getY();
-        if (randomSteps == 0) {
+        if (steps == 0) {
             generateMovement();
         }
         switch (randomDirection) {
@@ -68,7 +71,7 @@ public class Blob extends Enemies {
                 this.x--;
                 break;
         }
-        randomSteps--;
+        steps--;
 
     }
 
@@ -78,15 +81,6 @@ public class Blob extends Enemies {
     public void generateMovement() {
         Random r = new Random();
         randomDirection = r.nextInt(4) * 90;
-        randomSteps = r.nextInt(50) + 3;
-    }
-
-    /**
-     * sets number of steps on 0, stops current enemy on old position
-     */
-    @Override
-    public void changeDirection() {    
-        this.setPosition(oldX, oldY);
-        randomSteps = 0;
+        steps = r.nextInt(50) + 3;
     }
 }

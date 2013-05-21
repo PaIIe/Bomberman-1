@@ -14,12 +14,14 @@ import org.newdawn.slick.SlickException;
  * @author Michal
  */
 public class Broom extends Enemies {
-    private int randomSteps;
+    //  private int randomSteps;
+
     private int randomDirection;
     private final static int SPEED = 2;
 
     /**
      * sets animations, direction and number of steps on start value
+     *
      * @throws SlickException
      */
     public Broom() throws SlickException {
@@ -28,7 +30,7 @@ public class Broom extends Enemies {
         super.animation = this.leftAnimation;
         this.animation.start();
         direction = Direction.WEST;
-        randomSteps = 0;
+        steps = 0;
     }
 
     /**
@@ -41,36 +43,36 @@ public class Broom extends Enemies {
     }
 
     /**
-     * moves in randomly generated direction for randomly generated number of steps |
-     * double speed
+     * moves in randomly generated direction for randomly generated number of
+     * steps | double speed
      */
     public void walk() {
         oldX = this.getX();
         oldY = this.getY();
-        if (randomSteps == 0) {
+        if (steps == 0) {
             generateMovement();
         }
         switch (randomDirection) {
             case 0:
                 direction = Direction.NORTH;
-                this.y-=SPEED;
+                this.y -= SPEED;
                 break;
             case 90:
                 direction = Direction.EAST;
                 this.animation = rightAnimation;
-                this.x+=SPEED;
+                this.x += SPEED;
                 break;
             case 180:
                 direction = Direction.SOUTH;
-                this.y+=SPEED;
+                this.y += SPEED;
                 break;
             case 270:
                 direction = Direction.WEST;
                 this.animation = leftAnimation;
-                this.x-=SPEED;
+                this.x -= SPEED;
                 break;
         }
-        randomSteps--;
+        steps--;
 
     }
 
@@ -80,15 +82,6 @@ public class Broom extends Enemies {
     public void generateMovement() {
         Random r = new Random();
         randomDirection = r.nextInt(4) * 90;
-        randomSteps = r.nextInt(50) + 3;
-    }
-
-    /**
-     * sets number of steps on 0, stops current enemy on old position
-     */
-    @Override
-    public void changeDirection() {    
-        this.setPosition(oldX, oldY);
-        randomSteps = 0;
+        steps = r.nextInt(50) + 3;
     }
 }

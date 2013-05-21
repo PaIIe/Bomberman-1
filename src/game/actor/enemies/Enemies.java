@@ -17,7 +17,7 @@ import org.newdawn.slick.Animation;
  *
  * @author Michal
  */
-public abstract class Enemies extends Actors {
+public class Enemies extends Actors {
 
     /**
      *
@@ -67,8 +67,8 @@ public abstract class Enemies extends Actors {
         if (this.intersectWithWall()) {
             changeDirection();
         }
-        for (int x = 0; x < level.getListOfObjects().toArray().length; x++) {
-            MapObjects o = (MapObjects) level.getListOfObjects().toArray()[x];
+        for (int i = 0; x < level.getListOfObjects().toArray().length; i++) {
+            MapObjects o = (MapObjects) level.getListOfObjects().toArray()[i];
             if (o.intersects(this)) {
                 if (o instanceof Flame) {                    
                     level.getListOfObjects().remove(this);
@@ -102,7 +102,10 @@ public abstract class Enemies extends Actors {
     }
 
     /**
-     *
+     * method responsible for changing direction
      */
-    public abstract void changeDirection();
+    public void changeDirection(){
+        this.setPosition(oldX, oldY);
+        steps=0;
+    }
 }

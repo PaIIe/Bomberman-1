@@ -11,7 +11,7 @@ import java.awt.geom.Rectangle2D;
  *
  * @author Michal
  */
-public abstract class Walls extends MapObjects {
+public class Walls extends MapObjects {
 
     /**
      * abstract class for wall type - block or wall

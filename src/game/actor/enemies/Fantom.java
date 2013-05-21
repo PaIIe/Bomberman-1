@@ -16,18 +16,18 @@ import org.newdawn.slick.SlickException;
 public class Fantom extends Enemies {
 
     private int generatedDirection;
-    
+
     /**
      * sets animation, number of steps on start value
+     *
      * @throws SlickException
      */
-    public Fantom() throws SlickException{
+    public Fantom() throws SlickException {
         this.animation = new Animation(Anim.getAnimation("resources/actors/fantom", 11), 150);
         animation.setPingPong(true);
         steps = 0;
     }
-    
-    
+
     /**
      * provides default enemy behaviour and walking
      */
@@ -36,7 +36,7 @@ public class Fantom extends Enemies {
         walk();
         super.act();
     }
-    
+
     /**
      * moves in specified direction
      */
@@ -66,8 +66,8 @@ public class Fantom extends Enemies {
     }
 
     /**
-     * randomly generates direction, checks if the next tile in the direction is clear
-     * moves tile after tile - 32 steps in 1 direction
+     * randomly generates direction, checks if the next tile in the direction is
+     * clear moves tile after tile - 32 steps in 1 direction
      */
     public void move() {
         if (steps == 0) {
@@ -99,14 +99,5 @@ public class Fantom extends Enemies {
             }
             steps = 32;
         }
-    }
-
-    /**
-     * sets number of steps on 0, stops current enemy on old position
-     */
-    @Override
-    public void changeDirection() {
-        this.setPosition(oldX, oldY);
-        steps = 0;
     }
 }

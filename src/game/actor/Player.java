@@ -236,23 +236,23 @@ public class Player extends Actors {
                     }
                 }
                 if (o instanceof BombsUp) {
-                    level.getListOfObjects().remove(o);
+                    level.removeFromLevel(o);
                     bombsCount++;
                     stat.incItemsUsed();
                 }
                 if (o instanceof RangeUp) {
-                    level.getListOfObjects().remove(o);
+                    level.removeFromLevel(o);
                     range++;
                     stat.incItemsUsed();
                 }
                 if (o instanceof SpeedUp) {
-                    level.getListOfObjects().remove(o);
+                    level.removeFromLevel(o);
                     speed += 2;
                     speedTime = 1000;
                     stat.incItemsUsed();
                 }
                 if (o instanceof KickUp) {
-                    level.getListOfObjects().remove(o);
+                    level.removeFromLevel(o);
                     kickTime = 2000;
                     stat.incItemsUsed();
                 }

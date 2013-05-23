@@ -33,8 +33,9 @@ public class Fantom extends Enemies {
      */
     @Override
     public void act() {
-        walk();
         super.act();
+        walk();
+        
     }
 
     /**

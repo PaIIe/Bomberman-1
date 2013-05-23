@@ -9,6 +9,7 @@ import game.Level;
 import game.MapObjects;
 import game.actor.enemies.Broom;
 import game.actor.enemies.Dragon;
+import game.actor.enemies.Enemies;
 import game.item.Items;
 import game.map.Portal;
 import java.awt.geom.Rectangle2D;
@@ -82,7 +83,7 @@ public class Flame extends Actors {
                         dragon.remove(dragon.size()-1);
                         dragonTimer=50;
                     }
-                }
+                } 
             }
 
             if (o.intersects(this) && o instanceof Items && ((Items) o).isVisible() && !(o instanceof Portal)) {

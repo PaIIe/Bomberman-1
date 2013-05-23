@@ -67,11 +67,11 @@ public class Enemies extends Actors {
         if (this.intersectWithWall()) {
             changeDirection();
         }
-        for (int i = 0; x < level.getListOfObjects().toArray().length; i++) {
+        for (int i = 0; i < level.getListOfObjects().toArray().length; i++) {
             MapObjects o = (MapObjects) level.getListOfObjects().toArray()[i];
             if (o.intersects(this)) {
                 if (o instanceof Flame) {                    
-                    level.getListOfObjects().remove(this);
+                    level.removeFromLevel(this);
                     stat.incEnemiesKilled();
                     }
 
